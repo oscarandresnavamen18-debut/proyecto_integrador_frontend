@@ -67,6 +67,7 @@ export default function HomePage() {
                   <div className="feature-content">
                     <h3 className="feature-title">Bienestar Animal</h3>
                     <p className="feature-description">Cuidado responsable</p>
+                    <p className = 'feature-description'>🐄</p>
                   </div>
                 </div>
               </div>
