@@ -1,7 +1,7 @@
-import React from 'react'
-
-export default function page() {
+export default function TiendaAgricolaPage() {
   return (
-    <div>page</div>
-  )
+    <div>
+      <h1>Bienvenido a la tienda agrícola</h1>
+    </div>
+  );
 }
