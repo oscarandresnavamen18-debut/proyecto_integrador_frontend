@@ -14,7 +14,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function CategoriaPage({ params }: CategoriaPageProps) {
+async function CategoriaPage({ params }: CategoriaPageProps) {
   const { categoria } = await params;
   if (!categorias.includes(categoria as Categoria)) {
     notFound();
@@ -44,3 +44,4 @@ export async function generateMetadata({ params }: CategoriaPageProps) {
     description: info.descripcion,
   };
 }
+export default CategoriaPage;
