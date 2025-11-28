@@ -137,7 +137,6 @@ export default function Header() {
               Promociones Especiales
             </Link>
 
-            {/* CARRITO MÓVIL */}
             {/* Mobile Cart */}
             <div className="pt-4 mt-4 border-t border-green-200">
               <button
