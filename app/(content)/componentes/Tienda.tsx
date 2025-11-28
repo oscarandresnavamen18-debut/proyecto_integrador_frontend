@@ -7,11 +7,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 
-/**
- * TRABAJADOR 1: Header Component
- * Este componente puede ser modificado independientemente
- * Responsabilidades: Navegación, menú mobile, logo, carrito
- */
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -41,6 +36,7 @@ export default function Header() {
           </Link>
          </div>
          </div>
+         
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-3">
@@ -128,16 +124,18 @@ export default function Header() {
     </button>
 
 
-      {/* Mobile Menu */}
-      {isMenuOpen && (
-      <motion.div
-      initial={{ opacity: 0, y: -10 }}
-       animate={{ opacity: 1, y: 0 }}
-       exit={{ opacity: 0, y: -10 }}
-       transition={{ duration: 0.25 }}
-      className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-green-100 shadow-lg"
-       >
+     {/* Mobile Menu */}
+{isMenuOpen && (
+  <motion.div
+    initial={{ opacity: 0, y: -10 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -10 }}
+    transition={{ duration: 0.25 }}
+    className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-green-100 shadow-lg"
+  >
     <nav className="px-4 py-6 space-y-2">
+
+      {/* Navegación principal */}
       {[
         { label: "🏠 Inicio", href: "/" },
         { label: "🐾 Mascotas", href: "/tienda-agricola/mascotas" },
@@ -166,45 +164,25 @@ export default function Header() {
       </Link>
 
       {/* Mobile Cart */}
-      <div className="pt-4 border-t border-green-100 mt-4">
-        <button
-          type="button"
-          className="w-full flex items-center justify-between p-4 hover:bg-green-50 rounded-xl transition-all duration-200"
-        >
-          <div className="flex items-center gap-3">
-            <ShoppingCart className="w-6 h-6 text-gray-700" />
-            <span className="font-semibold text-gray-700">Mi Carrito</span>
-          </div>
-          <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm px-3 py-1 rounded-full font-bold">
-            0 items
-          </span>
-        </button>
-      </div>
-    </nav>
-  </motion.div>
+<div className="pt-4 mt-4 border-t border-green-200">
+  <button
+    type="button"
+    aria-label="Abrir carrito de compras"
+    className="w-full flex items-center justify-between px-4 py-3 rounded-xl transition-colors hover:bg-green-100"
+    onClick={() => setIsMenuOpen(false)}
+  >
+    <div className="flex items-center gap-3">
+      <ShoppingCart className="w-6 h-6 text-emerald-700" />
+      <span className="font-medium text-gray-800">
+        Mi Carrito
+      </span>
+    </div>
+
+    {/* Reemplazar "0" por estado o props cuando implementes carrito */}
+    <span className="min-w-[50px] text-center px-3 py-1 text-sm font-semibold rounded-full bg-red-500 text-white">
+      0 items
+    </span>
+  </button>
+</div>
 
 
-
-            {/* Mobile Cart */}
-            <div className="pt-4 border-t border-green-100 mt-4">
-              <button
-                type="button"
-                className="w-full flex items-center justify-between p-4 hover:bg-green-50 rounded-xl transition-all"
-              >
-                <div className="flex items-center gap-3">
-                  <ShoppingCart className="w-6 h-6 text-gray-700" />
-                  <span className="font-semibold text-gray-700">
-                    Mi Carrito
-                  </span>
-                </div>
-                <span className="bg-linear-to-r from-red-500 to-pink-500 text-white text-sm px-3 py-1 rounded-full font-bold">
-                  0 items
-                </span>
-              </button>
-            </div>
-          </nav>
-        </div>
-      
-    </header>
-  );
-} 
