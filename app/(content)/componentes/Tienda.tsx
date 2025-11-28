@@ -130,51 +130,60 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-green-100 shadow-lg">
-          <nav className="px-4 py-6 space-y-2">
-            <Link
-              href="/"
-              className="block text-gray-700 hover:bg-green-50 hover:text-green-700 font-semibold py-3 px-4 rounded-xl transition-all"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              🏠 Inicio
-            </Link>
-            <Link
-              href="/tienda-agricola/mascotas"
-              className="block text-gray-700 hover:bg-blue-50 hover:text-blue-700 font-semibold py-3 px-4 rounded-xl transition-all"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              🐾 Mascotas
-            </Link>
-            <Link
-              href="/tienda-agricola/ferreteria"
-              className="block text-gray-700 hover:bg-gray-50 hover:text-gray-900 font-semibold py-3 px-4 rounded-xl transition-all"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              🔧 Ferretería
-            </Link>
-            <Link
-              href="/tienda-agricola/ganaderia"
-              className="block text-gray-700 hover:bg-green-50 hover:text-green-800 font-semibold py-3 px-4 rounded-xl transition-all"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              🐄 Ganadería
-            </Link>
-            <Link
-              href="/tienda-agricola/agricola"
-              className="block text-gray-700 hover:bg-emerald-50 hover:text-emerald-700 font-semibold py-3 px-4 rounded-xl transition-all"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              🌾 Agrícola
-            </Link>
-            <Link
-              href="/tienda-agricola/promociones"
-              className="bg-linear-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-xl hover:from-red-600 hover:to-pink-600 font-bold text-center transition-all shadow-lg flex items-center justify-center gap-2"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <Sparkles className="w-5 h-5" />
-              Promociones Especiales
-            </Link>
+      <motion.div
+      initial={{ opacity: 0, y: -10 }}
+       animate={{ opacity: 1, y: 0 }}
+       exit={{ opacity: 0, y: -10 }}
+       transition={{ duration: 0.25 }}
+      className="lg:hidden bg-white/95 backdrop-blur-xl border-t border-green-100 shadow-lg"
+       >
+    <nav className="px-4 py-6 space-y-2">
+      {[
+        { label: "🏠 Inicio", href: "/" },
+        { label: "🐾 Mascotas", href: "/tienda-agricola/mascotas" },
+        { label: "🔧 Ferretería", href: "/tienda-agricola/ferreteria" },
+        { label: "🐄 Ganadería", href: "/tienda-agricola/ganaderia" },
+        { label: "🌾 Agrícola", href: "/tienda-agricola/agricola" },
+      ].map((item) => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className="block text-gray-700 hover:bg-green-50 hover:text-green-700 font-semibold py-3 px-4 rounded-xl transition-all duration-200"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          {item.label}
+        </Link>
+      ))}
+
+      {/* Botón Promociones */}
+      <Link
+        href="/tienda-agricola/promociones"
+        className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-xl font-bold text-center transition-all shadow-lg flex items-center justify-center gap-2 hover:scale-[1.03]"
+        onClick={() => setIsMenuOpen(false)}
+      >
+        <Sparkles className="w-5 h-5" />
+        Promociones Especiales
+      </Link>
+
+      {/* Mobile Cart */}
+      <div className="pt-4 border-t border-green-100 mt-4">
+        <button
+          type="button"
+          className="w-full flex items-center justify-between p-4 hover:bg-green-50 rounded-xl transition-all duration-200"
+        >
+          <div className="flex items-center gap-3">
+            <ShoppingCart className="w-6 h-6 text-gray-700" />
+            <span className="font-semibold text-gray-700">Mi Carrito</span>
+          </div>
+          <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-sm px-3 py-1 rounded-full font-bold">
+            0 items
+          </span>
+        </button>
+      </div>
+    </nav>
+  </motion.div>
+
+
 
             {/* Mobile Cart */}
             <div className="pt-4 border-t border-green-100 mt-4">
@@ -195,7 +204,7 @@ export default function Header() {
             </div>
           </nav>
         </div>
-      )}
+      
     </header>
   );
-}
+} 
