@@ -1,0 +1,15 @@
+/* Estilos para asegurar que el grid funcione correctamente */
+.tienda-agricola-container {
+  width: 100%;
+}
+
+/* Forzar display grid en elementos con clase grid */
+.tienda-agricola-container [class*="grid"] {
+  display: grid !important;
+}
+
+/* Limitar el ancho máximo de las imágenes de productos */
+.tienda-agricola-container .product-image-container {
+  max-width: 100%;
+  object-fit: contain;
+}

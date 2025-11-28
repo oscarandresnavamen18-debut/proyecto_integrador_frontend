@@ -1,126 +1,109 @@
 "use client";
 
 import { Producto } from "@/types/product";
-import { motion } from "framer-motion";
+import { ShoppingCart, Percent } from "lucide-react";
 import { useState } from "react";
 
 interface ProductCardProps {
   producto: Producto;
-  onClickCard?: (producto: Producto) => void;
-  onClickComprar?: (producto: Producto) => void;
+  onOpenModal?: (producto: Producto) => void;
 }
 
-export default function ProductCard({ producto, onClickCard, onClickComprar }: ProductCardProps) {
+export default function ProductCard({ producto, onOpenModal }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat("es-CO", {
+      style: "currency",
+      currency: "COP",
+      minimumFractionDigits: 0,
+    }).format(price);
+  };
+
+  const handleCardClick = () => {
+    onOpenModal?.(producto);
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      whileHover={{ y: -8, transition: { duration: 0.2 } }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
-      onClick={() => onClickCard?.(producto)}
-      className="group relative bg-white rounded-3xl shadow-lg overflow-hidden cursor-pointer h-full flex flex-col"
+    <div
+      className="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-green-200 w-full cursor-pointer"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={handleCardClick}
     >
-      {/* Gradient overlay on hover */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-green-400/10 via-blue-500/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10"
-      />
+      {/* Image Container */}
+      <div className="relative w-full h-56 overflow-hidden bg-gray-50">
+        <img
+          src={producto.imagen}
+          alt={producto.nombre}
+          className={`w-full h-full object-contain p-2 transition-transform duration-500 ${
+            isHovered ? "scale-110" : "scale-100"
+          }`}
+        />
 
-      {/* Promotional badge */}
-      {producto.enPromocion && producto.descuento && (
-        <motion.div
-          initial={{ scale: 0, rotate: -180 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ type: "spring", stiffness: 260, damping: 20 }}
-          className="absolute top-3 right-3 z-20"
-        >
-          <div className="relative">
-            <div className="absolute inset-0 bg-red-500 rounded-full blur-lg opacity-50 animate-pulse" />
-            <div className="relative bg-gradient-to-br from-red-500 to-red-600 text-white px-3 py-2 rounded-full font-bold text-sm shadow-xl">
-              -{producto.descuento}%
-            </div>
+        {/* Promotion Badge */}
+        {producto.enPromocion && producto.descuento && (
+          <div className="absolute top-3 right-3 bg-red-500 text-white px-3 py-1.5 rounded-full flex items-center gap-1 font-bold text-sm shadow-lg animate-pulse-slow">
+            <Percent className="w-4 h-4" />
+            <span>{producto.descuento}% OFF</span>
           </div>
-        </motion.div>
-      )}
+        )}
 
-      {/* Category badge */}
-      <div className="absolute top-3 left-3 z-20">
-        <div className="bg-white/90 backdrop-blur-sm text-gray-700 px-3 py-1 rounded-full text-xs font-semibold shadow-md capitalize">
+        {/* Category Badge */}
+        <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold capitalize shadow-md ${
+          producto.categoria === "mascotas" ? "bg-blue-500 text-white" :
+          producto.categoria === "ferreteria" ? "bg-gray-500 text-white" :
+          producto.categoria === "ganaderia" ? "bg-green-600 text-white" :
+          "bg-emerald-500 text-white"
+        }`}>
           {producto.categoria}
         </div>
       </div>
 
-      {/* Image container with 3D effect */}
-      <div className="relative w-full h-56 md:h-64 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-        <motion.img
-          src={producto.imagen}
-          alt={producto.nombre}
-          className="w-full h-full object-contain p-4"
-          animate={{
-            scale: isHovered ? 1.1 : 1,
-            rotateY: isHovered ? 5 : 0,
-          }}
-          transition={{ duration: 0.3 }}
-        />
-
-        {/* Shine effect */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full"
-          animate={{
-            translateX: isHovered ? "200%" : "-100%",
-          }}
-          transition={{ duration: 0.6 }}
-        />
-      </div>
-
       {/* Content */}
-      <div className="p-5 flex flex-col flex-grow">
-        <h2 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2 min-h-[3.5rem] group-hover:text-green-600 transition-colors duration-300">
+      <div className="p-4">
+        {/* Product Name */}
+        <h3 className="font-semibold text-gray-800 text-sm mb-2 line-clamp-2 min-h-[40px] group-hover:text-green-600 transition-colors">
           {producto.nombre}
-        </h2>
+        </h3>
 
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2 flex-grow">
+        {/* Description */}
+        <p className="text-xs text-gray-500 line-clamp-2 mb-3">
           {producto.descripcion}
         </p>
 
-        {/* Pricing section */}
-        <div className="space-y-3 mt-auto">
-          {producto.enPromocion && producto.precioOriginal && (
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-gray-400 text-sm line-through">
-                ${producto.precioOriginal.toLocaleString('es-CO')}
-              </span>
-              <span className="bg-green-50 text-green-700 px-2 py-1 rounded-lg text-xs font-semibold border border-green-200">
-                Ahorra ${(producto.precioOriginal - producto.precio).toLocaleString('es-CO')}
-              </span>
+        {/* Pricing */}
+        <div className="mb-4">
+          {producto.enPromocion && producto.precioOriginal ? (
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-xl font-bold text-green-600">
+                  {formatPrice(producto.precio)}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-gray-400 line-through">
+                  {formatPrice(producto.precioOriginal)}
+                </span>
+                <span className="text-xs font-semibold text-red-500">
+                  Ahorra {formatPrice(producto.precioOriginal - producto.precio)}
+                </span>
+              </div>
             </div>
-          )}
-
-          <div className="flex justify-between items-center gap-3">
-            <span className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-              ${producto.precio.toLocaleString('es-CO')}
+          ) : (
+            <span className="text-xl font-bold text-gray-800">
+              {formatPrice(producto.precio)}
             </span>
+          )}
+        </div>
 
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={(e) => {
-                e.stopPropagation();
-                onClickComprar?.(producto);
-              }}
-              className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-2.5 px-5 rounded-xl transition-all duration-300 shadow-md hover:shadow-xl"
-            >
-              Comprar
-            </motion.button>
-          </div>
+        {/* View Details Button */}
+        <div className="w-full bg-linear-to-r from-green-500 via-emerald-500 to-teal-500 hover:from-green-600 hover:via-emerald-600 hover:to-teal-600 text-white py-3 px-4 rounded-lg font-bold flex items-center justify-center gap-2 transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-2xl relative overflow-hidden group-hover:animate-pulse">
+          <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+          <ShoppingCart className="w-5 h-5 relative z-10" />
+          <span className="relative z-10 text-base">Ver Detalles</span>
         </div>
       </div>
-
-      {/* Bottom shine effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-    </motion.div>
+    </div>
   );
 }

@@ -1,9 +1,11 @@
 import { Producto, CategoriaInfo, Categoria } from "@/types/product";
 
+export type { Producto };
+
 export const productosPorCategoria: Record<Categoria, Producto[]> = {
   mascotas: [
     {
-      id: "1",
+      id: "m1",
       nombre: "SPECTRA-DOL (MELOXICAM) ( FRASCO POR 10 ML)",
       precio: 27600,
       precioOriginal: 34500,
@@ -14,7 +16,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       descuento: 20,
     },
     {
-      id: "2",
+      id: "m2",
       nombre: "JABÓN PIOJIDERMA 100 GR",
       precio: 29500,
       precioOriginal: 74000,
@@ -25,7 +27,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       categoria: "mascotas",
     },
     {
-      id: "3",
+      id: "m3",
       nombre: "NOVACAN T x 10 ML",
       precio: 34800,
       precioOriginal: 43500,
@@ -36,7 +38,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       categoria: "mascotas",
     },
     {
-      id: "4",
+      id: "m4",
       nombre: "DESCENSOR 200 MG CAJA x 30 PASTILLAS",
       precio: 49200,
       precioOriginal: 61500,
@@ -47,7 +49,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       descuento: 20,
     },
     {
-      id: "5",
+      id: "m5",
       nombre: "EDO CHAMPU LITRO",
       precio: 76500,
       descripcion: "Champú con citronella para limpieza profunda y efecto repelente.",
@@ -59,7 +61,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
 
   ferreteria: [
     {
-      id: "1",
+      id: "f1",
       nombre: "DESCOLMILLADORA",
       precio: 15099,
       descripcion: "Instrumento veterinario en acero quirúrgico, usado para cortar colmillos de cerdo recién nacidos.",
@@ -68,7 +70,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       categoria: "ferreteria",
     },
     {
-      id: "2",
+      id: "f2",
       nombre: "Botas",
       precio: 68500,
       descripcion: "Botas de PVC de alta flexibilidad y resistencia al desgaste.",
@@ -77,7 +79,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       categoria: "ferreteria",
     },
     {
-      id: "3",
+      id: "f3",
       nombre: "ESTUCHE CIRUGÍA 15 PIEZAS",
       precio: 21675,
       precioOriginal: 25500,
@@ -88,7 +90,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       descuento: 15,
     },
     {
-      id: "4",
+      id: "f4",
       nombre: "FUMIGADORA ROYAL CÓNDOR 20L",
       precio: 212467,
       precioOriginal: 250550,
@@ -99,7 +101,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       descuento: 15,
     },
     {
-      id: "5",
+      id: "f5",
       nombre: "TIJERA CORTA RAMAS 21",
       precio: 79500,
       descripcion: "Tijera resistente y afilada para trabajos de campo.",
@@ -108,7 +110,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       categoria: "ferreteria",
     },
     {
-      id: "6",
+      id: "f6",
       nombre: "AISLADOR MANGO BROCHE",
       precio: 87000,
       descripcion: "Alta resistencia a impacto y radiación UV; evita pérdida de corriente.",
@@ -117,7 +119,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       categoria: "ferreteria",
     },
     {
-      id: "7",
+      id: "f7",
       nombre: "CUCHILLA DOBLE TIRO",
       precio: 45050,
       descripcion: "Cuchilla útil como protector durante tormentas eléctricas.",
@@ -129,7 +131,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
 
   ganaderia: [
     {
-      id: "1",
+      id: "g1",
       nombre: "ANAPLAST COMBO 250 ML + 100 ML PROMEVET",
       precio: 113500,
       descripcion: "ANAPLAST 250 ML es un tratamiento para control y prevención de enfermedades hemoparasitarias.",
@@ -138,7 +140,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       categoria: "ganaderia",
     },
     {
-      id: "2",
+      id: "g2",
       nombre: "EFFIPRO® BOVIS LITRO VIRBAC",
       precio: 164000,
       precioOriginal: 205000,
@@ -149,7 +151,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       descuento: 20,
     },
     {
-      id: "3",
+      id: "g3",
       nombre: "EMICINA® 100 x 250 ML – ZOETIS",
       precio: 152000,
       precioOriginal: 190000,
@@ -160,7 +162,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       descuento: 20,
     },
     {
-      id: "4",
+      id: "g4",
       nombre: "PROMOCALIER 43 KILO CALIER",
       precio: 158000,
       descripcion: "Suplemento multivitamínico para mejorar salud, rendimiento y recuperación del ganado.",
@@ -169,7 +171,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       categoria: "ganaderia",
     },
     {
-      id: "5",
+      id: "g5",
       nombre: "SILLA CIENAGUERA VAQUERIA APERADA MESACE",
       precio: 1445000,
       descripcion: "Montura resistente para trabajo de vaquería, fabricada en PVC, cómoda y libre de mantenimiento.",
@@ -181,7 +183,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
 
   agricola: [
     {
-      id: "1",
+      id: "a1",
       nombre: "MAQUINA SEMBRADORA / ABONADORA AUTO SEEDER",
       precio: 202000,
       descripcion: "Abonadora sembradora diseñada para la aplicación uniforme de semillas y abonos.",
@@ -190,7 +192,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       categoria: "agricola",
     },
     {
-      id: "2",
+      id: "a2",
       nombre: "HIDROKOSECHA 4-14-20 GEL LITRO",
       precio: 52000,
       precioOriginal: 65000,
@@ -201,7 +203,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       descuento: 20,
     },
     {
-      id: "3",
+      id: "a3",
       nombre: "SOLUTEC DESARROLLO",
       precio: 31875,
       precioOriginal: 37500,
@@ -212,7 +214,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       descuento: 15,
     },
     {
-      id: "4",
+      id: "a4",
       nombre: "ARPON 60 ml",
       precio: 37000,
       descripcion: "Diseñado para combatir plagas como moscas, garrapatas y ectoparásitos.",
@@ -221,7 +223,7 @@ export const productosPorCategoria: Record<Categoria, Producto[]> = {
       categoria: "agricola",
     },
     {
-      id: "5",
+      id: "a5",
       nombre: "CONTROLER BLACK SUMITOMO NUFARM",
       precio: 45000,
       descripcion: "Control efectivo de plagas minimizando pérdidas y maximizando el rendimiento.",

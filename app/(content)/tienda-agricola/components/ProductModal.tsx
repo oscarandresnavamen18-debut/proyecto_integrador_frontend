@@ -1,174 +1,237 @@
 "use client";
 
-import { Producto } from "@/types/product";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect } from "react";
+import { X, ShoppingCart, Minus, Plus, Sparkles, Package, BadgeCheck } from "lucide-react";
+import { Producto } from "@/types/product";
+import { useState, useEffect } from "react";
 
 interface ProductModalProps {
   producto: Producto | null;
+  isOpen: boolean;
   onClose: () => void;
 }
 
-export default function ProductModal({ producto, onClose }: ProductModalProps) {
-  // Lock body scroll when modal is open
-  useEffect(() => {
-    if (producto) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [producto]);
+export default function ProductModal({ producto, isOpen, onClose }: ProductModalProps) {
+  const [quantity, setQuantity] = useState(1);
 
-  // Close on escape key
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen) {
+        onClose();
+      }
     };
-    window.addEventListener('keydown', handleEscape);
-    return () => window.removeEventListener('keydown', handleEscape);
-  }, [onClose]);
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
+
+  if (!producto) return null;
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat("es-CO", {
+      style: "currency",
+      currency: "COP",
+      minimumFractionDigits: 0,
+    }).format(price);
+  };
+
+  const handleAddToCart = () => {
+    // Aquí puedes agregar la lógica del carrito
+    console.log(`Agregando ${quantity} ${producto.nombre} al carrito`);
+    onClose();
+  };
 
   return (
     <AnimatePresence>
-      {producto && (
+      {isOpen && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="fixed inset-0 bg-black/70 backdrop-blur-sm flex justify-center items-center p-4 z-50"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
         >
           <motion.div
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            transition={{ type: "spring", duration: 0.5 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full overflow-hidden relative"
+            className="relative bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl"
           >
-            {/* Close button */}
+            {/* Close Button */}
             <motion.button
               whileHover={{ scale: 1.1, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
               onClick={onClose}
-              className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/90 backdrop-blur-sm hover:bg-red-500 text-gray-700 hover:text-white rounded-full shadow-lg flex items-center justify-center transition-colors duration-300"
+              className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-lg hover:bg-red-500 hover:text-white transition-colors"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <X className="w-6 h-6" />
             </motion.button>
 
-            <div className="flex flex-col md:flex-row">
-              {/* Image section */}
-              <div className="md:w-1/2 relative bg-gradient-to-br from-gray-50 to-gray-100 p-8 flex items-center justify-center">
-                {/* Promotional badge */}
+            <div className="grid md:grid-cols-2 gap-8 p-8">
+              {/* Left: Image */}
+              <div className="relative">
+                {/* Promotion Badge */}
                 {producto.enPromocion && producto.descuento && (
-                  <div className="absolute top-4 left-4 z-10">
-                    <div className="relative">
-                      <div className="absolute inset-0 bg-red-500 rounded-full blur-md opacity-50 animate-pulse" />
-                      <div className="relative bg-gradient-to-br from-red-500 to-red-600 text-white px-4 py-2 rounded-full font-bold shadow-xl">
-                        -{producto.descuento}% OFF
-                      </div>
-                    </div>
-                  </div>
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.2, type: "spring" }}
+                    className="absolute top-0 right-0 bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-2 rounded-full flex items-center gap-2 font-bold shadow-lg z-10"
+                  >
+                    <Sparkles className="w-5 h-5" />
+                    <span>{producto.descuento}% OFF</span>
+                  </motion.div>
                 )}
 
-                <motion.img
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                  src={producto.imagen}
-                  alt={producto.nombre}
-                  className="w-full h-auto max-h-96 object-contain drop-shadow-2xl"
-                />
-
-                {/* Category badge */}
-                <div className="absolute bottom-4 left-4">
-                  <div className="bg-white/90 backdrop-blur-sm text-gray-700 px-4 py-2 rounded-full text-sm font-semibold shadow-lg capitalize">
-                    {producto.categoria}
-                  </div>
+                {/* Image Container */}
+                <div className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl overflow-hidden">
+                  <motion.img
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.1 }}
+                    src={producto.imagen}
+                    alt={producto.nombre}
+                    className="w-full h-full object-contain p-8"
+                  />
                 </div>
               </div>
 
-              {/* Content section */}
-              <div className="md:w-1/2 p-8 flex flex-col justify-between">
+              {/* Right: Info */}
+              <div className="flex flex-col justify-between overflow-y-auto max-h-[70vh]">
                 <div>
+                  {/* Category Badge */}
+                  <motion.div
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-semibold mb-4 ${
+                      producto.categoria === "mascotas" ? "bg-blue-100 text-blue-700" :
+                      producto.categoria === "ferreteria" ? "bg-gray-100 text-gray-700" :
+                      producto.categoria === "ganaderia" ? "bg-green-100 text-green-700" :
+                      "bg-emerald-100 text-emerald-700"
+                    }`}
+                  >
+                    <Package className="w-4 h-4" />
+                    <span className="capitalize">{producto.categoria}</span>
+                  </motion.div>
+
+                  {/* Title */}
                   <motion.h2
-                    initial={{ x: 20, opacity: 0 }}
+                    initial={{ x: -20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.3 }}
-                    className="text-3xl md:text-4xl font-bold text-gray-800 mb-4 leading-tight"
+                    className="text-3xl font-bold text-gray-900 mb-4"
                   >
                     {producto.nombre}
                   </motion.h2>
 
+                  {/* Description */}
                   <motion.p
-                    initial={{ x: 20, opacity: 0 }}
+                    initial={{ x: -20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.4 }}
-                    className="text-gray-600 text-base md:text-lg leading-relaxed mb-6"
+                    className="text-gray-600 mb-6 leading-relaxed"
                   >
                     {producto.descripcion}
                   </motion.p>
 
-                  {/* Pricing section */}
+                  {/* Features */}
                   <motion.div
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: 0.5 }}
-                    className="space-y-3 mb-8"
+                    className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 mb-6"
                   >
-                    {producto.enPromocion && producto.precioOriginal && (
+                    <div className="flex items-center gap-2 text-green-700 font-semibold mb-2">
+                      <BadgeCheck className="w-5 h-5" />
+                      <span>Producto Certificado</span>
+                    </div>
+                    <ul className="text-sm text-gray-600 space-y-1">
+                      <li>✓ Calidad garantizada</li>
+                      <li>✓ Envío a toda Colombia</li>
+                      <li>✓ Soporte técnico incluido</li>
+                    </ul>
+                  </motion.div>
+
+                  {/* Price */}
+                  <motion.div
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: 0.6 }}
+                    className="mb-6"
+                  >
+                    {producto.enPromocion && producto.precioOriginal ? (
                       <div className="space-y-2">
-                        <div className="flex items-center gap-3">
-                          <span className="text-gray-400 text-lg line-through">
-                            ${producto.precioOriginal.toLocaleString('es-CO')}
+                        <div className="flex items-baseline gap-3">
+                          <span className="text-4xl font-bold text-green-600">
+                            {formatPrice(producto.precio)}
                           </span>
-                          <span className="bg-green-100 text-green-700 px-3 py-1 rounded-lg text-sm font-bold border border-green-200">
-                            Ahorra ${(producto.precioOriginal - producto.precio).toLocaleString('es-CO')}
+                          <span className="text-xl text-gray-400 line-through">
+                            {formatPrice(producto.precioOriginal)}
                           </span>
                         </div>
+                        <div className="inline-flex items-center gap-2 bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-semibold">
+                          <TrendingDown className="w-4 h-4" />
+                          Ahorra {formatPrice(producto.precioOriginal - producto.precio)}
+                        </div>
                       </div>
+                    ) : (
+                      <span className="text-4xl font-bold text-gray-900">
+                        {formatPrice(producto.precio)}
+                      </span>
                     )}
-
-                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-2xl border-2 border-green-200">
-                      <div className="text-sm text-gray-600 mb-1">Precio:</div>
-                      <div className="text-5xl font-extrabold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                        ${producto.precio.toLocaleString('es-CO')}
-                      </div>
-                    </div>
                   </motion.div>
                 </div>
 
-                {/* Action buttons */}
+                {/* Quantity Selector & Add to Cart */}
                 <motion.div
                   initial={{ y: 20, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.6 }}
-                  className="flex gap-3"
+                  transition={{ delay: 0.7 }}
+                  className="space-y-4"
                 >
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={onClose}
-                    className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-4 px-6 rounded-xl transition-all duration-300 border border-gray-300"
-                  >
-                    Cerrar
-                  </motion.button>
+                  {/* Quantity */}
+                  <div className="flex items-center gap-4">
+                    <span className="text-gray-700 font-semibold">Cantidad:</span>
+                    <div className="flex items-center gap-3 bg-gray-100 rounded-full p-1">
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                        className="bg-white p-2 rounded-full shadow-sm hover:bg-gray-50"
+                      >
+                        <Minus className="w-4 h-4" />
+                      </motion.button>
+                      <span className="w-12 text-center font-bold text-lg">{quantity}</span>
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => setQuantity(quantity + 1)}
+                        className="bg-white p-2 rounded-full shadow-sm hover:bg-gray-50"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </motion.button>
+                    </div>
+                  </div>
 
+                  {/* Add to Cart Button */}
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={() => {
-                      alert(`Producto "${producto.nombre}" agregado al carrito`);
-                      onClose();
-                    }}
-                    className="flex-1 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl"
+                    onClick={handleAddToCart}
+                    className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-4 rounded-2xl font-bold text-lg flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transition-all"
                   >
-                    Comprar Ahora
+                    <ShoppingCart className="w-6 h-6" />
+                    Agregar al Carrito - {formatPrice(producto.precio * quantity)}
                   </motion.button>
                 </motion.div>
               </div>
@@ -177,5 +240,13 @@ export default function ProductModal({ producto, onClose }: ProductModalProps) {
         </motion.div>
       )}
     </AnimatePresence>
+  );
+}
+
+function TrendingDown({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
+    </svg>
   );
 }
