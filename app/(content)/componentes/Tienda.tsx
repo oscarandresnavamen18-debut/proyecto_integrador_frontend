@@ -4,6 +4,8 @@ import Link from "next/link";
 import { ShoppingCart, Menu, X, Sparkles } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
+
 
 /**
  * TRABAJADOR 1: Header Component
@@ -14,7 +16,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-100 bg-white/80 backdrop-blur-xl border-b border-green-100 shadow-sm">
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-green-100 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
@@ -37,6 +39,8 @@ export default function Header() {
               </p>
             </div>
           </Link>
+         </div>
+         </div>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-3">
@@ -101,19 +105,28 @@ export default function Header() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            type="button"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-3 hover:bg-green-50 rounded-xl transition-all duration-200"
-          >
-            {isMenuOpen ? (
-              <X className="w-7 h-7 text-gray-700" />
-            ) : (
-              <Menu className="w-7 h-7 text-gray-700" />
-            )}
-          </button>
-        </div>
-      </div>
+         <button
+         type="button"
+         aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"} 
+         aria-expanded={isMenuOpen}
+         onClick={() => setIsMenuOpen(!isMenuOpen)}
+         className={`lg:hidden p-3 rounded-xl transition-all duration-300
+        ${isMenuOpen ? "bg-green-100 scale-105" : "hover:bg-green-50"}
+        `}
+        >
+       <motion.div
+        initial={{ rotate: 0 }}
+         animate={{ rotate: isMenuOpen ? 90 : 0 }}
+         transition={{ duration: 0.3 }}
+         >
+       {isMenuOpen ? (
+       <X className="w-7 h-7 text-gray-700" />
+       ) : (
+      <Menu className="w-7 h-7 text-gray-700" />
+       )}
+      </motion.div>
+    </button>
+
 
       {/* Mobile Menu */}
       {isMenuOpen && (
