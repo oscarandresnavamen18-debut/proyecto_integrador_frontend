@@ -26,7 +26,7 @@ async function CategoriaPage({ params }: CategoriaPageProps) {
   // Genera el título dinámico
   const titulo = `Catálogo de Productos - ${info.titulo}`;
 
-  return <ProductGrid productos={productos} titulo={titulo} />;
+  return <ProductGrid productos={productos} titulo={titulo} categoria={categoria} />;
 }
 export async function generateMetadata({ params }: CategoriaPageProps) {
   const { categoria } = await params;
