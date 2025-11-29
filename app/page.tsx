@@ -1,10 +1,16 @@
 // src/app/page.tsx
 "use client";
 
+
 import { useEffect, useState } from "react";
 import { HeroTitle } from "./Components/home/HeroTitle";
 import { Background } from "./Components/home/Background";
 import { Navbar } from "./Components/layout/Navbar";
+
+import React from 'react'
+import Tienda from './(content)/componentes/Tienda'
+import Footer from '@/components/layout/Footer'
+
 
 export default function HomePage() {
   const [showText, setShowText] = useState(false);
@@ -15,6 +21,7 @@ export default function HomePage() {
   }, []);
 
   return (
+
     <Background>
       {/* Navbar */}
       <Navbar />
@@ -290,3 +297,4 @@ export default function HomePage() {
     </Background>
   );
 }
+
