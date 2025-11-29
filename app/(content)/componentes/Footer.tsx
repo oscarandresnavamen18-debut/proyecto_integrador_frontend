@@ -6,6 +6,11 @@ import {
   Phone,
   MapPin,
   Leaf,
+  PawPrint,
+  Hammer,
+  Beef,
+  Sprout,
+  Tag,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -43,65 +48,110 @@ export default function Footer() {
                 <Facebook className="w-5 h-5" />
               </Link>
 
-              <link
+              <Link
                 href="#"
                 className="bg-gray-800 p-2 rounded-full hover:bg-green-600 transition-colors no-underline"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
-              </link>
-              <link
+              </Link>
+              <Link
                 href="#"
                 className="bg-gray-800 p-2 rounded-full hover:bg-green-600 transition-colors no-underline"
                 aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5" />
-              </link>
+              </Link>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-white font-semibold mb-4">Categorías</h4>
-            <ul className="space-y-2">
+            <h4
+              id="footer-categories-heading"
+              className="text-white font-semibold mb-4 text-lg"
+            >
+              Categorías
+            </h4>
+            <ul className="space-y-3" role="list">
               <li>
                 <Link
                   href="/tienda-agricola/mascotas"
-                  className="hover:text-white transition-colors"
+                  className="group flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-200 hover:translate-x-1"
+                  aria-label="Ir a la sección de productos para mascotas"
                 >
-                  Mascotas
+                  <PawPrint
+                    className="w-5 h-5 text-gray-400 group-hover:text-emerald-400 transition-colors duration-200"
+                    aria-hidden="true"
+                  />
+                  <span className="relative">
+                    Mascotas
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-400 group-hover:w-full transition-all duration-200"></span>
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tienda-agricola/ferreteria"
-                  className="hover:text-white transition-colors"
+                  className="group flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-200 hover:translate-x-1"
+                  aria-label="Ir a la sección de ferretería"
                 >
-                  Ferretería
+                  <Hammer
+                    className="w-5 h-5 text-gray-400 group-hover:text-emerald-400 transition-colors duration-200"
+                    aria-hidden="true"
+                  />
+                  <span className="relative">
+                    Ferretería
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-400 group-hover:w-full transition-all duration-200"></span>
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tienda-agricola/ganaderia"
-                  className="hover:text-white transition-colors"
+                  className="group flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-200 hover:translate-x-1"
+                  aria-label="Ir a la sección de ganadería"
                 >
-                  Ganadería
+                  <Beef
+                    className="w-5 h-5 text-gray-400 group-hover:text-emerald-400 transition-colors duration-200"
+                    aria-hidden="true"
+                  />
+                  <span className="relative">
+                    Ganadería
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-400 group-hover:w-full transition-all duration-200"></span>
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tienda-agricola/agricola"
-                  className="hover:text-white transition-colors"
+                  className="group flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-200 hover:translate-x-1"
+                  aria-label="Ir a la sección agrícola"
                 >
-                  Agrícola
+                  <Sprout
+                    className="w-5 h-5 text-gray-400 group-hover:text-emerald-400 transition-colors duration-200"
+                    aria-hidden="true"
+                  />
+                  <span className="relative">
+                    Agrícola
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-400 group-hover:w-full transition-all duration-200"></span>
+                  </span>
                 </Link>
               </li>
               <li>
                 <Link
                   href="/tienda-agricola/promociones"
-                  className="hover:text-white transition-colors"
+                  className="group flex items-center gap-3 text-gray-300 hover:text-white transition-all duration-200 hover:translate-x-1"
+                  aria-label="Ver nuestras promociones actuales"
                 >
-                  Promociones
+                  <Tag
+                    className="w-5 h-5 text-gray-400 group-hover:text-emerald-400 transition-colors duration-200"
+                    aria-hidden="true"
+                  />
+                  <span className="relative">
+                    Promociones
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-400 group-hover:w-full transition-all duration-200"></span>
+                  </span>
                 </Link>
               </li>
             </ul>
