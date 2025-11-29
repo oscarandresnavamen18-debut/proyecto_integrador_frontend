@@ -14,12 +14,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-/**
- * TRABAJADOR 3: Footer Component
- * Este componente puede ser modificado independientemente
- * Responsabilidades: Enlaces, información de contacto, redes sociales
- */
-
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300">
@@ -159,32 +153,65 @@ export default function Footer() {
 
           {/* Customer Service */}
           <div>
-            <h4 className="text-white font-semibold mb-4">
+            <h4
+              id="footer-customer-service-heading"
+              className="text-white font-semibold mb-4 text-lg"
+            >
               Atención al Cliente
             </h4>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-3" role="list">
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="group flex items-center gap-2 text-gray-300 hover:text-white transition-all duration-200"
+                >
+                  <span className="text-green-500 group-hover:translate-x-1 transition-transform duration-200">
+                    →
+                  </span>
                   Preguntas Frecuentes
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="group flex items-center gap-2 text-gray-300 hover:text-white transition-all duration-200"
+                >
+                  <span className="text-green-500 group-hover:translate-x-1 transition-transform duration-200">
+                    →
+                  </span>
                   Política de Devoluciones
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="group flex items-center gap-2 text-gray-300 hover:text-white transition-all duration-200"
+                >
+                  <span className="text-green-500 group-hover:translate-x-1 transition-transform duration-200">
+                    →
+                  </span>
                   Términos y Condiciones
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="group flex items-center gap-2 text-gray-300 hover:text-white transition-all duration-200"
+                >
+                  <span className="text-green-500 group-hover:translate-x-1 transition-transform duration-200">
+                    →
+                  </span>
                   Política de Privacidad
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors">
+                <a
+                  href="#"
+                  className="group flex items-center gap-2 text-gray-300 hover:text-white transition-all duration-200"
+                >
+                  <span className="text-green-500 group-hover:translate-x-1 transition-transform duration-200">
+                    →
+                  </span>
                   Envíos y Entregas
                 </a>
               </li>
