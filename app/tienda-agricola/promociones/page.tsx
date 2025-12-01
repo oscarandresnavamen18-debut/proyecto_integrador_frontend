@@ -1,94 +1,155 @@
-import ProductoCard from "@/components/ProductoCard";
+"use client";
+
 import Tienda from "@/app/(content)/componentes/Tienda";
 import Footer from "@/app/(content)/componentes/Footer";
-import { Sparkles } from "lucide-react";
+import Link from "next/link";
+import { Sparkles, ShoppingCart, Tag, ArrowLeft, TrendingDown } from "lucide-react";
+import { productosPorCategoria } from "@/data/products";
+import { Producto } from "@/types/product";
+import Image from "next/image";
 
 export default function PromocionesPage() {
-  const promociones = [
-    {
-      nombre: "Concentrado para Perros 25kg",
-      precio: 85000,
-      descuento: 20,
-      imagen: "/productos/concentrado-perros.jpg",
-      descripcion: "Alimento balanceado premium",
-    },
-    {
-      nombre: "Fertilizante Triple 15 50kg",
-      precio: 95000,
-      descuento: 15,
-      imagen: "/productos/fertilizante.jpg",
-      descripcion: "Fertilizante completo NPK",
-    },
-    {
-      nombre: "Bomba Fumigadora 20L",
-      precio: 250000,
-      descuento: 25,
-      imagen: "/productos/fumigadora.jpg",
-      descripcion: "Bomba de espalda profesional",
-    },
-    {
-      nombre: "Carretilla 60L",
-      precio: 120000,
-      descuento: 10,
-      imagen: "/productos/carretilla.jpg",
-      descripcion: "Carretilla metálica resistente",
-    },
-    {
-      nombre: "Sal Mineralizada 25kg",
-      precio: 65000,
-      descuento: 15,
-      imagen: "/productos/sal-mineral.jpg",
-      descripcion: "Suplemento mineral para ganado",
-    },
-    {
-      nombre: "Sistema de Riego por Goteo",
-      precio: 320000,
-      descuento: 30,
-      imagen: "/productos/riego.jpg",
-      descripcion: "Kit completo para 500m²",
-    },
-  ];
+  // Filtrar todos los productos en promoción
+  const promociones: Producto[] = Object.values(productosPorCategoria)
+    .flat()
+    .filter((producto) => producto.enPromocion);
+
+  // Calcular descuento máximo
+  const descuentoMaximo = Math.max(
+    ...promociones.map((p) => p.descuento || 0)
+  );
 
   return (
     <>
       <Tienda />
-      <main className="min-h-screen bg-gradient-to-b from-red-50 to-pink-50 py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-full mb-4">
-              <Sparkles className="w-6 h-6" />
-              <span className="font-bold text-lg">OFERTAS ESPECIALES</span>
+      <main className="min-h-screen bg-gradient-to-b from-red-50 via-pink-50 to-orange-50 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumb */}
+          <Link
+            href="/tienda-agricola"
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-red-600 mb-8 transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span className="font-medium">Volver a categorías</span>
+          </Link>
+
+          {/* Header animado */}
+          <div className="relative bg-linear-to-r from-red-500 via-pink-500 to-orange-500 rounded-3xl overflow-hidden mb-12 shadow-2xl">
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/45-degree-fabric-light.png')] opacity-10" />
+            <div className="relative p-12 text-center text-white">
+              <div className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full mb-6">
+                <Sparkles className="w-6 h-6 animate-pulse" />
+                <span className="font-bold text-lg">OFERTAS ESPECIALES</span>
+                <Sparkles className="w-6 h-6 animate-pulse" />
+              </div>
+
+              <h1 className="text-5xl md:text-6xl font-bold mb-4">
+                Promociones Exclusivas
+              </h1>
+
+              <p className="text-2xl font-light mb-6 max-w-3xl mx-auto">
+                Aprovecha descuentos de hasta <span className="font-bold text-3xl">{descuentoMaximo}%</span> en productos seleccionados
+              </p>
+
+              <div className="flex items-center justify-center gap-4 flex-wrap">
+                <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full">
+                  <Tag className="w-5 h-5" />
+                  <span className="font-semibold">{promociones.length} productos en oferta</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-6 py-3 rounded-full">
+                  <TrendingDown className="w-5 h-5" />
+                  <span className="font-semibold">Tiempo limitado</span>
+                </div>
+              </div>
             </div>
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
-              Promociones del Mes
-            </h1>
-            <p className="text-gray-600 text-lg">
-              Aprovecha estos descuentos increíbles por tiempo limitado
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Grid de productos en promoción */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-20">
             {promociones.map((producto) => (
-              <ProductoCard key={producto.nombre} {...producto} />
+              <div
+                key={producto.id}
+                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border-2 border-red-100"
+              >
+                {/* Imagen del producto */}
+                <div className="relative h-64 overflow-hidden bg-gray-100">
+                  <Image
+                    src={producto.imagen}
+                    alt={producto.nombre}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  {producto.descuento && (
+                    <div className="absolute top-4 right-4 z-10">
+                      <div className="bg-red-500 text-white px-4 py-2 rounded-full font-bold text-lg flex items-center gap-2 shadow-xl animate-pulse">
+                        <Tag className="w-5 h-5" />
+                        -{producto.descuento}%
+                      </div>
+                    </div>
+                  )}
+                  <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-gray-700 px-3 py-1 rounded-full text-xs font-semibold uppercase">
+                    {producto.categoria}
+                  </div>
+                </div>
+
+                {/* Información del producto */}
+                <div className="p-6">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 min-h-14">
+                    {producto.nombre}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-2 min-h-10">
+                    {producto.descripcion}
+                  </p>
+
+                  {/* Precios */}
+                  <div className="mb-4">
+                    <div className="flex items-baseline gap-2 mb-1">
+                      <span className="text-3xl font-bold text-red-600">
+                        ${producto.precio.toLocaleString("es-CO")}
+                      </span>
+                    </div>
+                    {producto.precioOriginal && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-gray-400 line-through">
+                          ${producto.precioOriginal.toLocaleString("es-CO")}
+                        </span>
+                        <span className="text-sm font-semibold text-green-600">
+                          Ahorras ${(producto.precioOriginal - producto.precio).toLocaleString("es-CO")}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Botón de compra */}
+                  <button type="button" className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 group-hover:shadow-lg">
+                    <ShoppingCart className="w-5 h-5" />
+                    Agregar al carrito
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
 
-          <div className="mt-12 bg-white rounded-2xl shadow-lg p-8 text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              No te pierdas nuestras ofertas
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Suscríbete a nuestro boletín y recibe promociones exclusivas
-            </p>
-            <div className="flex gap-3 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Tu correo electrónico"
-                className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
-              <button className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
-                Suscribirse
-              </button>
+          {/* Newsletter */}
+          <div className="bg-linear-to-br from-white to-red-50 rounded-3xl shadow-xl p-12 text-center border-2 border-red-100">
+            <div className="max-w-2xl mx-auto">
+              <Sparkles className="w-16 h-16 text-red-500 mx-auto mb-6" />
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                No te pierdas nuestras ofertas
+              </h2>
+              <p className="text-gray-600 text-lg mb-8">
+                Suscríbete a nuestro boletín y recibe promociones exclusivas directamente en tu correo
+              </p>
+              <div className="flex gap-3 max-w-md mx-auto flex-col sm:flex-row">
+                <input
+                  type="email"
+                  placeholder="Tu correo electrónico"
+                  className="flex-1 px-6 py-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-lg"
+                />
+                <button type="button" className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-colors shadow-lg hover:shadow-xl whitespace-nowrap">
+                  Suscribirse
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { ShoppingCart, Menu, X, Sparkles } from "lucide-react";
 import { useState } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 export default function Header() {
@@ -16,14 +15,8 @@ export default function Header() {
         <div className="flex items-center justify-between h-20">
           {/* LOGO */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative w-16 h-16 group-hover:scale-110 transition-transform duration-300">
-              <Image
-                src="/LOGO_PG.png"
-                alt="La Casa del Ganadero"
-                width={64}
-                height={64}
-                className="w-full h-full object-contain"
-              />
+            <div className="text-5xl transition-transform group-hover:rotate-12 group-hover:scale-110 duration-300">
+              🐄
             </div>
             <div>
               <h1 className="text-2xl font-black text-gray-900 group-hover:text-green-600 transition-colors">
