@@ -32,32 +32,31 @@ export function Background({ children }: { children: React.ReactNode }) {
 
       <style jsx>{`
         .background-container {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          overflow: auto;
+          position: relative;
+          min-height: 100vh;
         }
 
         .background-gradient {
-          position: absolute;
+          position: fixed;
           inset: 0;
           background: linear-gradient(135deg, #064e3b 0%, #059669 50%, #10b981 100%);
+          z-index: 0;
         }
 
         .background-texture {
-          position: absolute;
+          position: fixed;
           inset: 0;
           background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1), transparent 50%);
           pointer-events: none;
+          z-index: 1;
         }
 
         .cows-container {
-          position: absolute;
+          position: fixed;
           inset: 0;
           overflow: hidden;
           pointer-events: none;
+          z-index: 2;
         }
 
         .cow {
@@ -106,13 +105,14 @@ export function Background({ children }: { children: React.ReactNode }) {
         }
 
         .grass-overlay {
-          position: absolute;
+          position: fixed;
           bottom: 0;
           left: 0;
           right: 0;
           height: 150px;
           background: linear-gradient(to top, rgba(6, 78, 59, 0.6), transparent);
           pointer-events: none;
+          z-index: 3;
         }
 
         .content-wrapper {

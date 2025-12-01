@@ -1,168 +1,169 @@
 // src/components/layout/Navbar.tsx
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { ShoppingCart, BookOpen, Syringe, User, Menu, X } from 'lucide-react';
+import { LoginModal } from '@/components/auth/LoginModal';
 
 export function Navbar() {
+  const pathname = usePathname();
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const sections = [
+    {
+      id: 'tienda',
+      label: 'Tienda',
+      icon: ShoppingCart,
+      href: '/tienda-agricola'
+    },
+    {
+      id: 'conocimiento',
+      label: 'Conocimiento',
+      icon: BookOpen,
+      href: '/conocimiento-ganadero'
+    },
+    {
+      id: 'vacunas',
+      label: 'Salud Animal',
+      icon: Syringe,
+      href: '/vacunas-enfermedades'
+    }
+  ];
+
+  const isActive = (href: string) => pathname.includes(href);
+
   return (
     <>
-      <nav className="navbar">
-        <div className="navbar-container">
-          {/* Logo */}
-          <div className="navbar-logo">
-            <span className="logo-icon">🐄</span>
-            <span className="logo-text">Ganadería</span>
-          </div>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? 'bg-white/95 backdrop-blur-lg shadow-lg' : 'bg-white/80 backdrop-blur-md'
+      }`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <Link
+              href="/"
+              className="flex items-center gap-3 group transition-transform hover:scale-105"
+            >
+              <div className="text-4xl transition-transform group-hover:rotate-12">🐄</div>
+              <div className="hidden sm:block">
+                <h1 className="text-xl font-bold text-gray-900 group-hover:text-green-700 transition-colors">
+                  Ganadería
+                </h1>
+                <p className="text-xs text-gray-600">Tecnología para el campo</p>
+              </div>
+            </Link>
 
-          {/* Links de navegación */}
-          <div className="navbar-links">
-         
-            <a href="/login" className="nav-link">Login</a>
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-2">
+              {sections.map((section) => {
+                const Icon = section.icon;
+                const active = isActive(section.href);
+
+                return (
+                  <Link
+                    key={section.id}
+                    href={section.href}
+                    className={`
+                      flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm
+                      transition-all duration-200
+                      ${active
+                        ? 'bg-green-600 text-white shadow-lg shadow-green-600/30'
+                        : 'text-gray-700 hover:bg-gray-100'
+                      }
+                    `}
+                  >
+                    <Icon size={18} />
+                    <span>{section.label}</span>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Login Button (Desktop) */}
+            <button
+              type="button"
+              onClick={() => setIsLoginModalOpen(true)}
+              className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-full font-semibold text-sm hover:from-green-700 hover:to-emerald-700 transition-all shadow-lg hover:shadow-xl hover:scale-105"
+            >
+              <User size={18} />
+              <span>Ingresar</span>
+            </button>
+
+            {/* Mobile Menu Button */}
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t border-gray-200 bg-white">
+            <div className="px-4 py-4 space-y-2">
+              {sections.map((section) => {
+                const Icon = section.icon;
+                const active = isActive(section.href);
+
+                return (
+                  <Link
+                    key={section.id}
+                    href={section.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`
+                      flex items-center gap-3 px-4 py-3 rounded-xl font-semibold
+                      transition-all duration-200
+                      ${active
+                        ? 'bg-green-600 text-white'
+                        : 'text-gray-700 hover:bg-gray-100'
+                      }
+                    `}
+                  >
+                    <Icon size={20} />
+                    <span>{section.label}</span>
+                  </Link>
+                );
+              })}
+
+              <button
+                type="button"
+                onClick={() => {
+                  setIsLoginModalOpen(true);
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl font-semibold mt-4"
+              >
+                <User size={20} />
+                <span>Ingresar</span>
+              </button>
+            </div>
+          </div>
+        )}
       </nav>
 
-      <style jsx>{`
-        .navbar {
-          position: relative;
-          z-index: 50;
-          padding: 12px 24px;
-          background: rgba(6, 78, 59, 0.25);
-          backdrop-filter: blur(12px);
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+      {/* Spacer to prevent content from going under navbar */}
+      <div className="h-20" />
 
-        .navbar-container {
-          max-width: 1280px;
-          margin: 0 auto;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .navbar-logo {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          color: white;
-          font-size: 20px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: transform 0.3s ease;
-        }
-
-        .navbar-logo:hover {
-          transform: scale(1.05);
-        }
-
-        .logo-icon {
-          font-size: 24px;
-          animation: subtle-bounce 3s ease-in-out infinite;
-        }
-
-        .logo-text {
-          letter-spacing: 0.3px;
-        }
-
-        .navbar-links {
-          display: flex;
-          gap: 24px;
-          align-items: center;
-        }
-
-        .nav-link {
-          color: rgba(255, 255, 255, 0.95);
-          text-decoration: none;
-          font-weight: 500;
-          font-size: 15px;
-          padding: 6px 14px;
-          border-radius: 6px;
-          transition: all 0.3s ease;
-          position: relative;
-        }
-
-        .nav-link::after {
-          content: '';
-          position: absolute;
-          bottom: 2px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 0;
-          height: 2px;
-          background: white;
-          transition: width 0.3s ease;
-        }
-
-        .nav-link:hover {
-          background: rgba(255, 255, 255, 0.12);
-          color: white;
-          transform: translateY(-1px);
-        }
-
-        .nav-link:hover::after {
-          width: 70%;
-        }
-
-        @keyframes subtle-bounce {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-2px);
-          }
-        }
-
-        /* Responsive para móviles */
-        @media (max-width: 768px) {
-          .navbar {
-            padding: 10px 20px;
-          }
-
-          .navbar-logo {
-            font-size: 18px;
-          }
-
-          .logo-icon {
-            font-size: 22px;
-          }
-
-          .navbar-links {
-            gap: 16px;
-          }
-
-          .nav-link {
-            font-size: 13px;
-            padding: 5px 10px;
-          }
-        }
-
-        @media (max-width: 480px) {
-          .navbar {
-            padding: 8px 16px;
-          }
-
-          .navbar-logo {
-            font-size: 16px;
-          }
-
-          .logo-icon {
-            font-size: 20px;
-          }
-
-          .navbar-links {
-            gap: 10px;
-          }
-
-          .nav-link {
-            font-size: 12px;
-            padding: 4px 8px;
-          }
-
-          .logo-text {
-            font-size: 16px;
-          }
-        }
-      `}</style>
+      {/* Login Modal */}
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+      />
     </>
   );
 }
