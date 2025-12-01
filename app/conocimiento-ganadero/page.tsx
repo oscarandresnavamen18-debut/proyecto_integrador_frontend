@@ -1,11 +1,26 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { BookOpen, Sprout, TrendingUp, Users, Award, Heart } from "lucide-react";
 import { Navbar } from "@/app/Components/layout/Navbar";
 import Footer from "@/app/(content)/componentes/Footer";
+import { KnowledgeModal } from "@/components/knowledge/KnowledgeModal";
 
 export default function ConocimientoGanaderoPage() {
+  const [selectedCategory, setSelectedCategory] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCategoryClick = (categoria: any) => {
+    setSelectedCategory(categoria);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedCategory(null), 300);
+  };
+
   const categorias = [
     {
       titulo: "Manejo del Ganado",
@@ -94,7 +109,8 @@ export default function ConocimientoGanaderoPage() {
               return (
                 <div
                   key={index}
-                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden hover:-translate-y-2"
+                  onClick={() => handleCategoryClick(categoria)}
+                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden hover:-translate-y-2 cursor-pointer"
                 >
                   <div className={`${categoria.color} p-6 text-center`}>
                     <Icon className="w-16 h-16 text-white mx-auto mb-4 group-hover:scale-110 transition-transform" />
@@ -119,9 +135,9 @@ export default function ConocimientoGanaderoPage() {
                         ))}
                       </div>
                     </div>
-                    <button className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 rounded-lg font-semibold hover:from-blue-600 hover:to-cyan-600 transition-all">
-                      Explorar Contenido
-                    </button>
+                    <div className="text-center text-blue-600 font-semibold text-sm group-hover:text-blue-700 transition-colors">
+                      Ver más información →
+                    </div>
                   </div>
                 </div>
               );
@@ -156,6 +172,13 @@ export default function ConocimientoGanaderoPage() {
         </section>
       </main>
       <Footer />
+
+      {/* Modal de categoría */}
+      <KnowledgeModal
+        categoria={selectedCategory}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </>
   );
 }

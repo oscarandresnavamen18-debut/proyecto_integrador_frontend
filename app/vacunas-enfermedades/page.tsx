@@ -1,11 +1,26 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Syringe, AlertTriangle, Shield, Activity, ClipboardCheck, Pill } from "lucide-react";
 import { Navbar } from "@/app/Components/layout/Navbar";
 import Footer from "@/app/(content)/componentes/Footer";
+import { HealthModal } from "@/components/health/HealthModal";
 
 export default function VacunasEnfermedadesPage() {
+  const [selectedCategory, setSelectedCategory] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCategoryClick = (categoria: any) => {
+    setSelectedCategory(categoria);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedCategory(null), 300);
+  };
+
   const categorias = [
     {
       titulo: "Plan de Vacunación",
@@ -164,7 +179,8 @@ export default function VacunasEnfermedadesPage() {
               return (
                 <div
                   key={index}
-                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden hover:-translate-y-2"
+                  onClick={() => handleCategoryClick(categoria)}
+                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden hover:-translate-y-2 cursor-pointer"
                 >
                   <div className={`${categoria.color} p-6 text-center`}>
                     <Icon className="w-16 h-16 text-white mx-auto mb-4 group-hover:scale-110 transition-transform" />
@@ -189,9 +205,9 @@ export default function VacunasEnfermedadesPage() {
                         ))}
                       </div>
                     </div>
-                    <button className="w-full bg-gradient-to-r from-red-500 to-pink-500 text-white py-3 rounded-lg font-semibold hover:from-red-600 hover:to-pink-600 transition-all">
-                      Ver Información
-                    </button>
+                    <div className="text-center text-red-600 font-semibold text-sm group-hover:text-red-700 transition-colors">
+                      Ver más información →
+                    </div>
                   </div>
                 </div>
               );
@@ -226,6 +242,13 @@ export default function VacunasEnfermedadesPage() {
         </section>
       </main>
       <Footer />
+
+      {/* Modal de categoría */}
+      <HealthModal
+        categoria={selectedCategory}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </>
   );
 }
