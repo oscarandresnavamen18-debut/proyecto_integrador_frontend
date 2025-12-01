@@ -246,7 +246,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-500">
           <p>
-            &copy; {new Date().getFullYear()} La Casa del Ganadero. Todos los
+            &copy; 2025 La Casa del Ganadero. Todos los
             derechos reservados.
           </p>
           <p className="mt-1">

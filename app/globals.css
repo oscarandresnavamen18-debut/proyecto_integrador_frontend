@@ -1,7 +1,20 @@
 /* src/app/globals.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* Configuración del modo oscuro */
+  --color-scheme: light dark;
+}
+
+@layer base {
+  html {
+    @apply h-full;
+  }
+
+  body {
+    @apply h-full m-0 p-0;
+  }
+}
 
 
 @layer utilities {
