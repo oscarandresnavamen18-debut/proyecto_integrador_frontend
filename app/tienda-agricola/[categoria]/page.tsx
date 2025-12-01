@@ -1,17 +1,31 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import { useState } from "react";
 import Tienda from "@/app/(content)/componentes/Tienda";
 import Footer from "@/app/(content)/componentes/Footer";
 import Link from "next/link";
 import { ArrowLeft, ShoppingCart, Tag } from "lucide-react";
 import { productosPorCategoria, categoriasInfo } from "@/data/products";
-import { Categoria } from "@/types/product";
+import { Categoria, Producto } from "@/types/product";
 import Image from "next/image";
+import { ProductModal } from "@/components/products/ProductModal";
 
 export default function CategoriaPage() {
   const params = useParams();
   const categoria = params.categoria as Categoria;
+  const [selectedProduct, setSelectedProduct] = useState<Producto | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleProductClick = (producto: Producto) => {
+    setSelectedProduct(producto);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedProduct(null), 300);
+  };
 
   const productos = productosPorCategoria[categoria] || [];
   const info = categoriasInfo[categoria];
@@ -20,7 +34,7 @@ export default function CategoriaPage() {
     return (
       <>
         <Tienda />
-        <main className="min-h-screen bg-gradient-to-b from-red-50 to-white py-16">
+        <main className="min-h-screen bg-linear-to-b from-red-50 to-white py-16">
           <div className="max-w-7xl mx-auto px-4 text-center">
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
               Categoría no encontrada
@@ -51,7 +65,7 @@ export default function CategoriaPage() {
   return (
     <>
       <Tienda />
-      <main className="min-h-screen bg-gradient-to-b from-green-50 via-white to-green-50 py-16">
+      <main className="min-h-screen bg-linear-to-b from-green-50 via-white to-green-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
           <Link
@@ -88,7 +102,8 @@ export default function CategoriaPage() {
             {productos.map((producto) => (
               <div
                 key={producto.id}
-                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2"
+                onClick={() => handleProductClick(producto)}
+                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 cursor-pointer"
               >
                 {/* Imagen del producto */}
                 <div className="relative h-64 overflow-hidden bg-gray-100">
@@ -108,10 +123,10 @@ export default function CategoriaPage() {
 
                 {/* Información del producto */}
                 <div className="p-6">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 min-h-[3.5rem]">
+                  <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 min-h-14">
                     {producto.nombre}
                   </h3>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2 min-h-[2.5rem]">
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-2 min-h-10">
                     {producto.descripcion}
                   </p>
 
@@ -133,11 +148,10 @@ export default function CategoriaPage() {
                     )}
                   </div>
 
-                  {/* Botón de compra */}
-                  <button className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 group-hover:shadow-lg">
-                    <ShoppingCart className="w-5 h-5" />
-                    Agregar al carrito
-                  </button>
+                  {/* Badge de "Ver detalles" */}
+                  <div className="text-center text-green-600 font-semibold text-sm group-hover:text-green-700 transition-colors">
+                    Ver detalles →
+                  </div>
                 </div>
               </div>
             ))}
@@ -165,6 +179,13 @@ export default function CategoriaPage() {
         </div>
       </main>
       <Footer />
+
+      {/* Modal de producto */}
+      <ProductModal
+        producto={selectedProduct}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </>
   );
 }

@@ -1,14 +1,19 @@
 "use client";
 
+import { useState } from "react";
 import Tienda from "@/app/(content)/componentes/Tienda";
 import Footer from "@/app/(content)/componentes/Footer";
 import Link from "next/link";
-import { Sparkles, ShoppingCart, Tag, ArrowLeft, TrendingDown } from "lucide-react";
+import { Sparkles, Tag, ArrowLeft, TrendingDown } from "lucide-react";
 import { productosPorCategoria } from "@/data/products";
 import { Producto } from "@/types/product";
 import Image from "next/image";
+import { ProductModal } from "@/components/products/ProductModal";
 
 export default function PromocionesPage() {
+  const [selectedProduct, setSelectedProduct] = useState<Producto | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Filtrar todos los productos en promoción
   const promociones: Producto[] = Object.values(productosPorCategoria)
     .flat()
@@ -19,10 +24,20 @@ export default function PromocionesPage() {
     ...promociones.map((p) => p.descuento || 0)
   );
 
+  const handleProductClick = (producto: Producto) => {
+    setSelectedProduct(producto);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedProduct(null), 300);
+  };
+
   return (
     <>
       <Tienda />
-      <main className="min-h-screen bg-gradient-to-b from-red-50 via-pink-50 to-orange-50 py-16">
+      <main className="min-h-screen bg-linear-to-b from-red-50 via-pink-50 to-orange-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb */}
           <Link
@@ -69,7 +84,8 @@ export default function PromocionesPage() {
             {promociones.map((producto) => (
               <div
                 key={producto.id}
-                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border-2 border-red-100"
+                onClick={() => handleProductClick(producto)}
+                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:-translate-y-2 border-2 border-red-100 cursor-pointer"
               >
                 {/* Imagen del producto */}
                 <div className="relative h-64 overflow-hidden bg-gray-100">
@@ -120,11 +136,10 @@ export default function PromocionesPage() {
                     )}
                   </div>
 
-                  {/* Botón de compra */}
-                  <button type="button" className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 group-hover:shadow-lg">
-                    <ShoppingCart className="w-5 h-5" />
-                    Agregar al carrito
-                  </button>
+                  {/* Badge de "Ver detalles" */}
+                  <div className="text-center text-red-600 font-semibold text-sm group-hover:text-red-700 transition-colors">
+                    Ver detalles →
+                  </div>
                 </div>
               </div>
             ))}
@@ -155,6 +170,13 @@ export default function PromocionesPage() {
         </div>
       </main>
       <Footer />
+
+      {/* Modal de producto */}
+      <ProductModal
+        producto={selectedProduct}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </>
   );
 }
