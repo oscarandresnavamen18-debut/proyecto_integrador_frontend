@@ -1,27 +1,104 @@
 // src/app/page.tsx
 "use client";
 
-
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { HeroTitle } from "./Components/home/HeroTitle";
 import { Background } from "./Components/home/Background";
 import { Navbar } from "./Components/layout/Navbar";
+import InfoSection from "@/app/Components/home/InfoSection";
+import { FeatureModal } from "./Components/home/FeatureModal";
 
-import React from 'react'
-import Tienda from './(content)/componentes/Tienda'
-import Footer from '@/components/layout/Footer'
-
+// Datos de las características
+const featuresData = [
+  {
+    icon: "🌱",
+    title: "100% Sostenible",
+    description: "Prácticas ecológicas comprometidas con el medio ambiente",
+    detailedInfo: [
+      "Implementamos sistemas de rotación de pasturas que permiten la regeneración natural del suelo y mejoran su fertilidad",
+      "Utilizamos energías renovables en nuestras instalaciones para reducir la huella de carbono",
+      "Gestionamos los recursos hídricos de manera eficiente con sistemas de captación de agua lluvia",
+      "Mantenemos corredores biológicos que protegen la biodiversidad local y los ecosistemas"
+    ],
+    benefits: [
+      "Suelos más fértiles y saludables",
+      "Reducción de costos energéticos",
+      "Conservación del agua",
+      "Protección de fauna silvestre"
+    ]
+  },
+  {
+    icon: "⭐",
+    title: "Calidad Premium",
+    description: "Productos de excelencia que superan estándares internacionales",
+    detailedInfo: [
+      "Contamos con certificaciones internacionales de calidad que garantizan nuestros procesos",
+      "Realizamos controles veterinarios constantes para asegurar la salud de nuestro ganado",
+      "Alimentamos nuestros animales con dietas balanceadas y suplementos nutricionales de alta calidad",
+      "Aplicamos trazabilidad completa desde el nacimiento hasta la comercialización del producto"
+    ],
+    benefits: [
+      "Productos certificados",
+      "Animales más saludables",
+      "Mayor valor nutricional",
+      "Garantía de origen"
+    ]
+  },
+  {
+    icon: "🐄",
+    title: "Bienestar Animal",
+    description: "Cuidado responsable y ético en todas nuestras prácticas",
+    detailedInfo: [
+      "Proporcionamos espacios amplios para el libre pastoreo y movimiento natural de los animales",
+      "Ofrecemos atención veterinaria preventiva y curativa permanente con profesionales especializados",
+      "Garantizamos condiciones de confort con sombra, agua fresca y áreas de descanso adecuadas",
+      "Aplicamos protocolos de manejo de bajo estrés que respetan el comportamiento natural del ganado"
+    ],
+    benefits: [
+      "Animales menos estresados",
+      "Mayor productividad",
+      "Reducción de enfermedades",
+      "Mejor calidad de vida"
+    ]
+  }
+];
 
 export default function HomePage() {
+  const router = useRouter();
   const [showText, setShowText] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
+  const [selectedFeature, setSelectedFeature] = useState<typeof featuresData[0] | null>(null);
+  const [showFeatureModal, setShowFeatureModal] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowText(true), 300);
     return () => clearTimeout(timer);
   }, []);
 
-  return (
+  const handleKnowMore = () => {
+    setShowInfo(true);
+  };
 
+  const handleCloseInfo = () => {
+    setShowInfo(false);
+  };
+
+  const handleNavigateToTienda = () => {
+    router.push('/tienda-agricola');
+  };
+
+  const handleFeatureClick = (feature: typeof featuresData[0]) => {
+    setSelectedFeature(feature);
+    setShowFeatureModal(true);
+  };
+
+  const handleCloseFeatureModal = () => {
+    setShowFeatureModal(false);
+    setTimeout(() => setSelectedFeature(null), 300);
+  };
+
+  return (
     <Background>
       {/* Navbar */}
       <Navbar />
@@ -38,48 +115,46 @@ export default function HomePage() {
 
             {/* CTA Buttons */}
             <div className="buttons-container">
-              <button className="btn-primary">
-                Tienda Agricola  →
+              <button className="btn-primary" onClick={handleKnowMore}>
+                Conocer Más 
               </button>
-            
+              <button className="btn-secondary" onClick={handleNavigateToTienda}>
+                Tienda Agrícola
+              </button>
             </div>
 
-            {/* Features Section - Tarjetas compactas */}
+            {/* Features Section */}
             <div className="features-grid">
-              <div className="feature-card">
-                <div className="card-inner">
-                  <div className="feature-icon">🌱</div>
-                  <div className="feature-content">
-                    <h3 className="feature-title">100% Sostenible</h3>
-                    <p className="feature-description">Prácticas ecológicas comprometidas</p>
+              {featuresData.map((feature, index) => (
+                <div
+                  key={index}
+                  className="feature-card"
+                  onClick={() => handleFeatureClick(feature)}
+                >
+                  <div className="card-inner">
+                    <div className="feature-icon">{feature.icon}</div>
+                    <div className="feature-content">
+                      <h3 className="feature-title">{feature.title}</h3>
+                      <p className="feature-description">{feature.description}</p>
+                      <span className="click-hint">Click para más info</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="feature-card">
-                <div className="card-inner">
-                  <div className="feature-icon">🏆</div>
-                  <div className="feature-content">
-                    <h3 className="feature-title">Calidad Premium</h3>
-                    <p className="feature-description">Productos de excelencia</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="feature-card">
-                <div className="card-inner">
-                  <div className="feature-icon">💚</div>
-                  <div className="feature-content">
-                    <h3 className="feature-title">Bienestar Animal</h3>
-                    <p className="feature-description">Cuidado responsable</p>
-                    <p className = 'feature-description'>🐄</p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         )}
       </main>
+
+      {/* Modal de información general */}
+      <InfoSection isOpen={showInfo} onClose={handleCloseInfo} />
+
+      {/* Modal de características */}
+      <FeatureModal
+        isOpen={showFeatureModal}
+        onClose={handleCloseFeatureModal}
+        feature={selectedFeature}
+      />
 
       <style jsx>{`
         .main-content {
@@ -144,7 +219,6 @@ export default function HomePage() {
           transform: translateY(-2px) scale(1.02);
         }
 
-        /* Tarjetas compactas */
         .features-grid {
           margin-top: 50px;
           display: grid;
@@ -165,6 +239,20 @@ export default function HomePage() {
           border: 1px solid rgba(255, 255, 255, 0.2);
           box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
           cursor: pointer;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .feature-card::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+          opacity: 0;
+          transition: opacity 0.3s ease;
         }
 
         .feature-card:hover {
@@ -174,11 +262,16 @@ export default function HomePage() {
           box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
         }
 
+        .feature-card:hover::before {
+          opacity: 1;
+        }
+
         .card-inner {
           display: flex;
           flex-direction: column;
           align-items: center;
           text-align: center;
+          position: relative;
         }
 
         .feature-icon {
@@ -210,6 +303,26 @@ export default function HomePage() {
           color: rgba(255, 255, 255, 0.95);
           font-weight: 400;
           text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+          margin-bottom: 10px;
+        }
+
+        .click-hint {
+          display: inline-block;
+          font-size: 12px;
+          color: rgba(255, 255, 255, 0.8);
+          background: rgba(255, 255, 255, 0.15);
+          padding: 4px 12px;
+          border-radius: 20px;
+          margin-top: 8px;
+          font-weight: 500;
+          opacity: 0;
+          transform: translateY(-5px);
+          transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .click-hint {
+          opacity: 1;
+          transform: translateY(0);
         }
 
         @keyframes fadeIn {
@@ -292,9 +405,13 @@ export default function HomePage() {
           .feature-description {
             font-size: 13px;
           }
+
+          .click-hint {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
       `}</style>
     </Background>
   );
 }
-
