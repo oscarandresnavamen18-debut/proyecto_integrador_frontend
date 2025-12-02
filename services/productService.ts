@@ -1,12 +1,50 @@
-import { get } from "./apiClient";
-import { Product } from "../types/product";
+import { Producto, Categoria } from "@/types/product";
 
-export async function listProducts(): Promise<Product[]> {
-  const data = await get<{ products: Product[] }>("/api/products");
-  return data.products;
+const API_BASE_URL = "https://692714f926e7e41498fce4e4.mockapi.io";
+
+/**
+ * Obtiene todos los productos desde la API
+ */
+export async function getAllProducts(): Promise<Producto[]> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/products`, {
+      cache: "no-store" // Siempre obtener datos frescos
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error al obtener productos:", error);
+    throw error;
+  }
 }
 
-export async function getProductById(id: string): Promise<Product | undefined> {
-  const products = await listProducts();
-  return products.find((p) => p.id === id);
+/**
+ * Obtiene productos filtrados por categoría
+ */
+export async function getProductsByCategory(categoria: Categoria): Promise<Producto[]> {
+  try {
+    const allProducts = await getAllProducts();
+    return allProducts.filter(producto => producto.categoria === categoria);
+  } catch (error) {
+    console.error(`Error al obtener productos de categoría ${categoria}:`, error);
+    throw error;
+  }
+}
+
+/**
+ * Obtiene productos en promoción
+ */
+export async function getProductsOnSale(): Promise<Producto[]> {
+  try {
+    const allProducts = await getAllProducts();
+    return allProducts.filter(producto => producto.enPromocion === true);
+  } catch (error) {
+    console.error("Error al obtener productos en promoción:", error);
+    throw error;
+  }
 }
