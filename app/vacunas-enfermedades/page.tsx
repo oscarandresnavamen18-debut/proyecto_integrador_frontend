@@ -210,19 +210,33 @@ export default function VacunasEnfermedadesPage() {
               return (
                 <div
                   key={index}
+                  aria-label={`Categoría ${categoria.titulo}`}
                   onClick={() => handleCategoryClick(categoria)}
-                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden hover:-translate-y-2 cursor-pointer"
+                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden hover:-translate-y-2 hover:border hover:border-gray-200 cursor-pointer"
                 >
-                  <div className={`${categoria.color} p-6 text-center`}>
+                  {/* Header de nuestra  tarjeta */}
+                  <div
+                    className={`${categoria.color} p-6 text-center relative`}
+                  >
+                    {/* Badge que agregamos nuevo */}
+                    <span className="absolute top-4 right-4 bg-white/20 text-white text-xs px-2 py-1 rounded-full backdrop-blur-sm">
+                      Categoría
+                    </span>
+
                     <Icon className="w-16 h-16 text-white mx-auto mb-4 group-hover:scale-110 transition-transform" />
+
                     <h3 className="text-2xl font-bold text-white">
                       {categoria.titulo}
                     </h3>
                   </div>
+
+                  {/* Contenido */}
                   <div className="p-6">
                     <p className="text-gray-600 mb-6">
                       {categoria.descripcion}
                     </p>
+
+                    {/* Temas */}
                     <div className="space-y-2 mb-6">
                       <p className="text-sm font-semibold text-gray-700">
                         Temas incluidos:
@@ -238,9 +252,15 @@ export default function VacunasEnfermedadesPage() {
                         ))}
                       </div>
                     </div>
+
+                    {/* Footer de la tarjeta */}
                     <div className="text-center text-red-600 font-semibold text-sm group-hover:text-red-700 transition-colors">
                       Ver más información →
                     </div>
+
+                    <p className="text-xs text-gray-400 mt-4 text-center">
+                      Información basada en normativas sanitarias vigentes.
+                    </p>
                   </div>
                 </div>
               );
