@@ -2,9 +2,73 @@
 "use client";
 
 import { useEffect, useState } from "react";
+<<<<<<< Updated upstream
 import { HeroTitle } from "./Components/home/HeroTitle";
 import { Background } from "./Components/home/Background";
 import { Navbar } from "./Components/layout/Navbar";
+=======
+import { useRouter } from "next/navigation";
+import { HeroTitle } from "@/components/home/HeroTitle";
+import { Background } from "@/components/home/Background";
+import { Navbar } from "@/components/layout/Navbar";
+import InfoSection from "@/components/home/InfoSection";
+import { FeatureModal } from "@/components/home/FeatureModal";
+
+// Datos de las características
+const featuresData = [
+  {
+    icon: "🌱",
+    title: "100% Sostenible",
+    description: "Prácticas ecológicas comprometidas con el medio ambiente",
+    detailedInfo: [
+      "Implementamos sistemas de rotación de pasturas que permiten la regeneración natural del suelo y mejoran su fertilidad",
+      "Utilizamos energías renovables en nuestras instalaciones para reducir la huella de carbono",
+      "Gestionamos los recursos hídricos de manera eficiente con sistemas de captación de agua lluvia",
+      "Mantenemos corredores biológicos que protegen la biodiversidad local y los ecosistemas"
+    ],
+    benefits: [
+      "Suelos más fértiles y saludables",
+      "Reducción de costos energéticos",
+      "Conservación del agua",
+      "Protección de fauna silvestre"
+    ]
+  },
+  {
+    icon: "⭐",
+    title: "Calidad Premium",
+    description: "Productos de excelencia que superan estándares internacionales",
+    detailedInfo: [
+      "Contamos con certificaciones internacionales de calidad que garantizan nuestros procesos",
+      "Realizamos controles veterinarios constantes para asegurar la salud de nuestro ganado",
+      "Alimentamos nuestros animales con dietas balanceadas y suplementos nutricionales de alta calidad",
+      "Aplicamos trazabilidad completa desde el nacimiento hasta la comercialización del producto"
+    ],
+    benefits: [
+      "Productos certificados",
+      "Animales más saludables",
+      "Mayor valor nutricional",
+      "Garantía de origen"
+    ]
+  },
+  {
+    icon: "🐄",
+    title: "Bienestar Animal",
+    description: "Cuidado responsable y ético en todas nuestras prácticas",
+    detailedInfo: [
+      "Proporcionamos espacios amplios para el libre pastoreo y movimiento natural de los animales",
+      "Ofrecemos atención veterinaria preventiva y curativa permanente con profesionales especializados",
+      "Garantizamos condiciones de confort con sombra, agua fresca y áreas de descanso adecuadas",
+      "Aplicamos protocolos de manejo de bajo estrés que respetan el comportamiento natural del ganado"
+    ],
+    benefits: [
+      "Animales menos estresados",
+      "Mayor productividad",
+      "Reducción de enfermedades",
+      "Mejor calidad de vida"
+    ]
+  }
+];
+>>>>>>> Stashed changes
 
 export default function HomePage() {
   const [showText, setShowText] = useState(false);
