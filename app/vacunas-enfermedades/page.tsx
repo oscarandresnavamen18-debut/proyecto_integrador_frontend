@@ -2,7 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Syringe, AlertTriangle, Shield, Activity, ClipboardCheck, Pill } from "lucide-react";
+import {
+  Syringe,
+  AlertTriangle,
+  Shield,
+  Activity,
+  ClipboardCheck,
+  Pill,
+} from "lucide-react";
 import { Navbar } from "@/app/Components/layout/Navbar";
 import Footer from "@/app/(content)/componentes/Footer";
 import { HealthModal } from "@/components/health/HealthModal";
@@ -27,43 +34,48 @@ export default function VacunasEnfermedadesPage() {
       descripcion: "Calendario y esquemas de vacunación recomendados",
       icono: Syringe,
       color: "bg-red-500",
-      temas: ["Aftosa", "Brucelosis", "Rabia", "Carbón bacteridiano"]
+      temas: ["Aftosa", "Brucelosis", "Rabia", "Carbón bacteridiano"],
     },
     {
       titulo: "Enfermedades Comunes",
       descripcion: "Identificación y manejo de patologías frecuentes",
       icono: AlertTriangle,
       color: "bg-orange-500",
-      temas: ["Mastitis", "Neumonía", "Diarrea", "Parásitos"]
+      temas: ["Mastitis", "Neumonía", "Diarrea", "Parásitos"],
     },
     {
       titulo: "Prevención",
       descripcion: "Medidas profilácticas y bioseguridad",
       icono: Shield,
       color: "bg-blue-500",
-      temas: ["Bioseguridad", "Cuarentena", "Higiene", "Desinfección"]
+      temas: ["Bioseguridad", "Cuarentena", "Higiene", "Desinfección"],
     },
     {
       titulo: "Diagnóstico",
       descripcion: "Signos clínicos y métodos de detección",
       icono: Activity,
       color: "bg-purple-500",
-      temas: ["Síntomas", "Análisis", "Pruebas", "Laboratorio"]
+      temas: ["Síntomas", "Análisis", "Pruebas", "Laboratorio"],
     },
     {
       titulo: "Tratamientos",
       descripcion: "Protocolos terapéuticos y medicamentos",
       icono: Pill,
       color: "bg-teal-500",
-      temas: ["Antibióticos", "Antiparasitarios", "Antiinflamatorios", "Vitaminas"]
+      temas: [
+        "Antibióticos",
+        "Antiparasitarios",
+        "Antiinflamatorios",
+        "Vitaminas",
+      ],
     },
     {
       titulo: "Registros Sanitarios",
       descripcion: "Control y documentación de la salud del hato",
       icono: ClipboardCheck,
       color: "bg-green-500",
-      temas: ["Histórico", "Reportes", "Certificados", "Trazabilidad"]
-    }
+      temas: ["Histórico", "Reportes", "Certificados", "Trazabilidad"],
+    },
   ];
 
   const enfermedadesDestacadas = [
@@ -73,7 +85,7 @@ export default function VacunasEnfermedadesPage() {
       color: "text-red-600",
       bgColor: "bg-red-100",
       descripcion: "Enfermedad viral altamente contagiosa",
-      vacuna: "Obligatoria"
+      vacuna: "Obligatoria",
     },
     {
       nombre: "Brucelosis",
@@ -81,7 +93,7 @@ export default function VacunasEnfermedadesPage() {
       color: "text-orange-600",
       bgColor: "bg-orange-100",
       descripcion: "Enfermedad bacteriana zoonótica",
-      vacuna: "Obligatoria"
+      vacuna: "Obligatoria",
     },
     {
       nombre: "Mastitis",
@@ -89,8 +101,8 @@ export default function VacunasEnfermedadesPage() {
       color: "text-yellow-600",
       bgColor: "bg-yellow-100",
       descripcion: "Inflamación de la glándula mamaria",
-      vacuna: "Prevención"
-    }
+      vacuna: "Prevención",
+    },
   ];
 
   return (
@@ -104,11 +116,10 @@ export default function VacunasEnfermedadesPage() {
               <Syringe className="w-6 h-6" />
               <span className="font-bold text-lg">Centro de Salud Animal</span>
             </div>
-            <h1 className="text-5xl font-bold mb-6">
-              Vacunas y Enfermedades
-            </h1>
+            <h1 className="text-5xl font-bold mb-6">Vacunas y Enfermedades</h1>
             <p className="text-xl text-red-100 max-w-2xl mx-auto">
-              Información completa sobre prevención, diagnóstico y tratamiento de enfermedades bovinas
+              Información completa sobre prevención, diagnóstico y tratamiento
+              de enfermedades bovinas
             </p>
           </div>
         </section>
@@ -120,8 +131,9 @@ export default function VacunasEnfermedadesPage() {
             <div>
               <h3 className="font-bold text-lg mb-1">Importante</h3>
               <p className="text-red-100">
-                Ante cualquier síntoma de enfermedad, consulte inmediatamente con un médico veterinario certificado.
-                La detección temprana salva vidas.
+                Ante cualquier síntoma de enfermedad, consulte inmediatamente
+                con un médico veterinario certificado. La detección temprana
+                salva vidas.
               </p>
             </div>
           </div>
@@ -139,15 +151,21 @@ export default function VacunasEnfermedadesPage() {
                 className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <h3 className="text-xl font-bold text-gray-900">{enfermedad.nombre}</h3>
-                  <span className={`${enfermedad.bgColor} ${enfermedad.color} text-xs font-bold px-3 py-1 rounded-full`}>
+                  <h3 className="text-xl font-bold text-gray-900">
+                    {enfermedad.nombre}
+                  </h3>
+                  <span
+                    className={`${enfermedad.bgColor} ${enfermedad.color} text-xs font-bold px-3 py-1 rounded-full`}
+                  >
                     {enfermedad.nivel}
                   </span>
                 </div>
                 <p className="text-gray-600 mb-4">{enfermedad.descripcion}</p>
                 <div className="flex items-center gap-2 text-sm">
                   <Shield className="w-4 h-4 text-green-600" />
-                  <span className="font-semibold text-green-600">{enfermedad.vacuna}</span>
+                  <span className="font-semibold text-green-600">
+                    {enfermedad.vacuna}
+                  </span>
                 </div>
               </div>
             ))}
@@ -157,17 +175,30 @@ export default function VacunasEnfermedadesPage() {
         {/* Intro Section */}
         <section className="max-w-7xl mx-auto px-4 mb-16">
           <div className="bg-white rounded-2xl shadow-lg p-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Protege la Salud de tu Ganado
-            </h2>
+            <header className="mb-4">
+              <h2 className="text-3xl font-bold text-gray-900">
+                Protege la Salud de tu Ganado
+              </h2>
+              <h3 className="text-lg text-green-700 font-semibold mt-1">
+                Bienestar, prevención y producción eficiente
+              </h3>
+            </header>
+
             <p className="text-gray-600 text-lg mb-4">
-              La prevención es la clave para mantener un hato saludable y productivo. Aquí encontrarás
-              información detallada sobre vacunas, enfermedades comunes, tratamientos y medidas de bioseguridad.
+              La prevención es la clave para mantener un hato saludable y
+              productivo. Aquí encontrarás información detallada sobre vacunas,
+              enfermedades comunes, tratamientos y medidas de bioseguridad.
             </p>
-            <p className="text-gray-600">
-              Nuestro equipo de veterinarios expertos ha recopilado guías prácticas basadas en las
-              últimas investigaciones y normativas sanitarias vigentes en Colombia.
+
+            <p className="text-gray-600 mb-6">
+              Nuestro equipo de veterinarios expertos ha recopilado guías
+              prácticas basadas en las últimas investigaciones y normativas
+              sanitarias vigentes en Colombia.
             </p>
+
+            <button className="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-3 rounded-xl transition">
+              Ver Guías de Salud
+            </button>
           </div>
         </section>
 
@@ -193,7 +224,9 @@ export default function VacunasEnfermedadesPage() {
                       {categoria.descripcion}
                     </p>
                     <div className="space-y-2 mb-6">
-                      <p className="text-sm font-semibold text-gray-700">Temas incluidos:</p>
+                      <p className="text-sm font-semibold text-gray-700">
+                        Temas incluidos:
+                      </p>
                       <div className="flex flex-wrap gap-2">
                         {categoria.temas.map((tema, idx) => (
                           <span
@@ -222,7 +255,8 @@ export default function VacunasEnfermedadesPage() {
               ¿Necesitas Productos Veterinarios?
             </h2>
             <p className="text-xl text-red-100 mb-8">
-              Encuentra vacunas, medicamentos y suplementos de calidad en nuestra tienda
+              Encuentra vacunas, medicamentos y suplementos de calidad en
+              nuestra tienda
             </p>
             <div className="flex gap-4 justify-center flex-wrap">
               <Link
