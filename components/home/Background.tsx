@@ -7,24 +7,17 @@ export function Background({ children }: { children: React.ReactNode }) {
   return (
     <>
       <div className="background-container">
-        {/* Fondo con degradado verde */}
         <div className="background-gradient" />
-        
-        {/* Capa de textura */}
-        <div className="background-texture" />
+                <div className="background-texture" />
 
-        {/* Vacas flotantes */}
         <div className="cows-container">
           <div className="cow cow-1">🐄</div>
           <div className="cow cow-2">🐮</div>
           <div className="cow cow-3">🐄</div>
           <div className="cow cow-4">🐮</div>
         </div>
-
-        {/* Overlay inferior */}
         <div className="grass-overlay" />
 
-        {/* Contenido */}
         <div className="content-wrapper">
           {children}
         </div>

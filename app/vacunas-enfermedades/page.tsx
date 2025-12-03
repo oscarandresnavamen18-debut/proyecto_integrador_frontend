@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Syringe, AlertTriangle, Shield, Activity, ClipboardCheck, Pill } from "lucide-react";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { HealthModal } from "@/components/health/HealthModal";
+import Footer from "@/components/layout/Footer";
+import { Navbar } from "../Components/layout/Navbar";
+import HealModal from "../layout/components/HealModal";
 
 export default function VacunasEnfermedadesPage() {
   const [selectedCategory, setSelectedCategory] = useState<any>(null);
@@ -97,7 +97,6 @@ export default function VacunasEnfermedadesPage() {
     <>
       <Navbar />
       <main className="min-h-screen bg-gradient-to-b from-red-50 via-white to-pink-50">
-        {/* Hero Section */}
         <section className="bg-gradient-to-r from-red-600 to-pink-600 text-white py-20">
           <div className="max-w-7xl mx-auto px-4 text-center">
             <div className="inline-flex items-center gap-3 bg-white/20 px-6 py-3 rounded-full mb-6">
@@ -112,8 +111,6 @@ export default function VacunasEnfermedadesPage() {
             </p>
           </div>
         </section>
-
-        {/* Alert Banner */}
         <div className="max-w-7xl mx-auto px-4 -mt-8 mb-12">
           <div className="bg-red-600 text-white rounded-2xl shadow-2xl p-6 flex items-center gap-4">
             <AlertTriangle className="w-8 h-8 flex-shrink-0" />
@@ -126,8 +123,6 @@ export default function VacunasEnfermedadesPage() {
             </div>
           </div>
         </div>
-
-        {/* Enfermedades Destacadas */}
         <section className="max-w-7xl mx-auto px-4 mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
             Enfermedades Prioritarias
@@ -153,8 +148,6 @@ export default function VacunasEnfermedadesPage() {
             ))}
           </div>
         </section>
-
-        {/* Intro Section */}
         <section className="max-w-7xl mx-auto px-4 mb-16">
           <div className="bg-white rounded-2xl shadow-lg p-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -170,8 +163,6 @@ export default function VacunasEnfermedadesPage() {
             </p>
           </div>
         </section>
-
-        {/* Categorías Grid */}
         <section className="max-w-7xl mx-auto px-4 pb-16 mb-20">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
             {categorias.map((categoria, index) => {
@@ -214,8 +205,6 @@ export default function VacunasEnfermedadesPage() {
             })}
           </div>
         </section>
-
-        {/* CTA Section */}
         <section className="bg-gradient-to-r from-red-600 to-pink-600 text-white py-16">
           <div className="max-w-4xl mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold mb-4">
@@ -241,10 +230,8 @@ export default function VacunasEnfermedadesPage() {
           </div>
         </section>
       </main>
-      <Footer />
-
-      {/* Modal de categoría */}
-      <HealthModal
+      <Footer/>
+      <HealModal
         categoria={selectedCategory}
         isOpen={isModalOpen}
         onClose={handleCloseModal}

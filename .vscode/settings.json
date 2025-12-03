@@ -1,0 +1,28 @@
+{
+  // ============================================
+  // CONFIGURACIÓN DE COLORES POR SECCIÓN
+  // ============================================
+  // 🔴 ROJO: Tienda Agrícola
+  // 🔵 AZUL: Vacunas y Enfermedades
+  // 🟡 AMARILLO: Conocimiento Ganadero
+  // ============================================
+
+  // Activar Material Icon Theme
+  "workbench.iconTheme": "material-icon-theme",
+
+  // Configuración de iconos personalizados para carpetas
+  "material-icon-theme.folders.associations": {
+    "tienda-agricola": "cart",
+    "vacunas-enfermedades": "health",
+    "conocimiento-ganadero": "library",
+    "tiendaAgricolaService": "cart",
+    "vacunas": "health",
+    "conocimiento": "library"
+  },
+
+  // Configuración de colores de carpetas (Material Icon Theme)
+  "material-icon-theme.folders.color": "#90a4ae",
+
+  // Mostrar flechas en carpetas
+  "material-icon-theme.hidesExplorerArrows": false
+}

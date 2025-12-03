@@ -8,13 +8,10 @@ export function Navbar() {
     <>
       <nav className="navbar">
         <div className="navbar-container">
-          {/* Logo */}
           <div className="navbar-logo">
             <span className="logo-icon">🐄</span>
             <span className="logo-text">Ganadería</span>
           </div>
-
-          {/* Links de navegación */}
           <div className="navbar-links">
             <a href="#inicio" className="nav-link">Inicio</a>
             <a href="/productos" className="nav-link">Productos</a>
