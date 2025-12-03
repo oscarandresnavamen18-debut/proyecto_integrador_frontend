@@ -1,6 +1,6 @@
 "use client";
 
-import LiquidEther from "../(content)/tienda-agricola/components/LiquidEther";
+import LiquidEther from "./components/LiquidEther";
 
 export default function TiendaAgricolaLayout({
   children,
@@ -10,7 +10,7 @@ export default function TiendaAgricolaLayout({
   return (
     <div className="relative min-h-screen bg-white">
       <LiquidEther
-        colors={['#10b981', '#34d399', '#6ee7b7']}
+        colors={['#6ef5c8ff', '#34d399', '#6ee7b7']}
         mouseForce={20}
         cursorSize={100}
         isViscous={false}

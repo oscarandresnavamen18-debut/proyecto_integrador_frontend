@@ -91,7 +91,7 @@ proyecto_integrador_frontend/
 ```
 page.tsx                  → Usa: Header, Footer, DecayCard, ProductCard
     ↓
-[categoria]/page.tsx      → Usa: Header, Footer, ProductCard, Breadcrumbs
+[categoria]/page.tsx      → Usa: Header, Footer, ProductCard, gis
     ↓
 promociones/page.tsx      → Usa: Header, Footer, ProductCard, Breadcrumbs
 ```

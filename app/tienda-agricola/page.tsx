@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Header from "../(content)/tienda-agricola/components/Header";
-import Footer from "../(content)/tienda-agricola/components/Footer";
-import DecayCard from "../(content)/tienda-agricola/components/DecayCard";
-import ProductCard from "../(content)/tienda-agricola/components/ProductCard";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import DecayCard from "./components/DecayCard";
+import ProductCard from "./components/ProductCard";
 import { ProductModal } from "@/components/products/ProductModal";
-import { categoriasInfo, productosPorCategoria, categorias, Producto } from "../(content)/tienda-agricola/data/productos";
+import { categoriasInfo, productosPorCategoria, categorias } from "./data/productos";
+import { Producto, Categoria } from "@/types/product";
 import { Sparkles, TrendingUp, Award, Truck } from "lucide-react";
 import Link from "next/link";
-import { Categoria } from "@/types";
 
 export default function TiendaAgricolaPage() {
   const [selectedProduct, setSelectedProduct] = useState<Producto | null>(null);
@@ -121,8 +121,7 @@ export default function TiendaAgricolaPage() {
             ].map((feature, index) => (
               <div
                 key={index}
-                className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors"
-              >
+                className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 transition-colors">
                 <div className="bg-green-100 p-3 rounded-lg">
                   <feature.icon className="w-6 h-6 text-green-600" />
                 </div>
@@ -160,15 +159,12 @@ export default function TiendaAgricolaPage() {
                   imagen={info.imagen}
                   color={info.color}
                   href={`/tienda-agricola/${categoria}`}
-                  productCount={productCount}
-                />
+                  productCount={productCount}/>
               );
             })}
           </div>
         </div>
       </section>
-
-      {/* Featured Products Section */}
       <section className="py-16 bg-white/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -189,8 +185,7 @@ export default function TiendaAgricolaPage() {
           <div className="text-center mt-12">
             <Link
               href="/tienda-agricola/promociones"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-            >
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
               <Sparkles className="w-5 h-5" />
               Ver Todas las Promociones
             </Link>

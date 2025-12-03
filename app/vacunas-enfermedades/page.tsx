@@ -4,9 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { Syringe, AlertTriangle, Shield, Activity, ClipboardCheck, Pill } from "lucide-react";
 import Footer from "@/components/layout/Footer";
-import { Navbar } from "../Components/layout/Navbar";
-import HealModal from "../layout/components/HealModal";
-
+import { Navbar } from "@/components/layout/Navbar";
+import { HealModal } from "@/components/health/HealModal";
 export default function VacunasEnfermedadesPage() {
   const [selectedCategory, setSelectedCategory] = useState<any>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

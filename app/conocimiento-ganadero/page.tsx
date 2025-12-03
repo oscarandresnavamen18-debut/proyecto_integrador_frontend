@@ -56,7 +56,6 @@ export default function ConocimientoGanaderoPage() {
     <>
       <Navbar />
       <main className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-cyan-50">
-        {/* Hero Section */}
         <section className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-20">
           <div className="max-w-7xl mx-auto px-4 text-center">
             <div className="inline-flex items-center gap-3 bg-white/20 px-6 py-3 rounded-full mb-6">
@@ -71,8 +70,6 @@ export default function ConocimientoGanaderoPage() {
             </p>
           </div>
         </section>
-
-        {/* Intro Section */}
         <section className="max-w-7xl mx-auto px-4 py-16">
           <div className="bg-white rounded-2xl shadow-lg p-8 mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -87,16 +84,13 @@ export default function ConocimientoGanaderoPage() {
               Explora nuestras categorías y descubre cómo implementar las mejores prácticas en tu finca.
             </p>
           </div>
-
-          {/* Categorías Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
             {categorias.map((categoria, index) => {
               const Icon = categoria.icono;
               return (
                 <div
                   key={index}
-                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden hover:-translate-y-2"
-                >
+                  className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden hover:-translate-y-2">
                   <div className={`${categoria.color} p-6 text-center`}>
                     <Icon className="w-16 h-16 text-white mx-auto mb-4 group-hover:scale-110 transition-transform" />
                     <h3 className="text-2xl font-bold text-white">
@@ -129,8 +123,6 @@ export default function ConocimientoGanaderoPage() {
             })}
           </div>
         </section>
-
-        {/* CTA Section */}
         <section className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-16">
           <div className="max-w-4xl mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold mb-4">
@@ -142,14 +134,12 @@ export default function ConocimientoGanaderoPage() {
             <div className="flex gap-4 justify-center flex-wrap">
               <Link
                 href="/contacto"
-                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-50 transition-colors"
-              >
+                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-50 transition-colors">
                 Solicitar Asesoría
               </Link>
               <Link
                 href="/tienda-agricola"
-                className="bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-800 transition-colors border-2 border-white"
-              >
+                className="bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-800 transition-colors border-2 border-white">
                 Ver Productos
               </Link>
             </div>

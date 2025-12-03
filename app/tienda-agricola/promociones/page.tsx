@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import Header from "../../(content)/tienda-agricola/components/Header";
-import Footer from "../../(content)/tienda-agricola/components/Footer";
-import ProductCard from "../../(content)/tienda-agricola/components/ProductCard";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import ProductCard from "../components/ProductCard";
 import { ProductModal } from "@/components/products/ProductModal";
-import Breadcrumbs from "../../(content)/tienda-agricola/components/Breadcrumbs";
-import { productosPorCategoria, categorias, Producto } from "../../(content)/tienda-agricola/data/productos";
+import Breadcrumbs from "../components/Breadcrumbs";
+import { productosPorCategoria, categorias } from "../data/productos";
+import { Producto, Categoria } from "@/types/product";
 import { Sparkles, Percent, TrendingDown, Filter } from "lucide-react";
-import { Categoria } from "@/types";
 
 export default function PromocionesPage() {
   const [selectedProduct, setSelectedProduct] = useState<Producto | null>(null);

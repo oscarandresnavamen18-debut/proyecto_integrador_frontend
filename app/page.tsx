@@ -1,20 +1,11 @@
-// src/app/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
-<<<<<<< Updated upstream
-import { HeroTitle } from "./Components/home/HeroTitle";
-import { Background } from "./Components/home/Background";
-import { Navbar } from "./Components/layout/Navbar";
-=======
 import { useRouter } from "next/navigation";
 import { HeroTitle } from "@/components/home/HeroTitle";
 import { Background } from "@/components/home/Background";
 import { Navbar } from "@/components/layout/Navbar";
-import InfoSection from "@/components/home/InfoSection";
-import { FeatureModal } from "@/components/home/FeatureModal";
 
-// Datos de las características
 const featuresData = [
   {
     icon: "🌱",
@@ -68,7 +59,6 @@ const featuresData = [
     ]
   }
 ];
->>>>>>> Stashed changes
 
 export default function HomePage() {
   const [showText, setShowText] = useState(false);
@@ -80,20 +70,13 @@ export default function HomePage() {
 
   return (
     <Background>
-      {/* Navbar */}
       <Navbar />
-
-      {/* Main content */}
       <main className="main-content">
         {showText && (
           <div className="content-container">
-            {/* Hero Section */}
             <HeroTitle
               title="Ganadería Sostenible"
-              subtitle="Tecnología e Innovación para el campo"
-            />
-
-            {/* CTA Buttons */}
+              subtitle="Tecnología e Innovación para el campo"/>
             <div className="buttons-container">
               <button className="btn-primary">
                 Conocer Más →
@@ -102,8 +85,6 @@ export default function HomePage() {
                 Contactar
               </button>
             </div>
-
-            {/* Features Section - Tarjetas compactas */}
             <div className="features-grid">
               <div className="feature-card">
                 <div className="card-inner">
